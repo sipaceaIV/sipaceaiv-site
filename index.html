@@ -649,6 +649,7 @@
                     <a href="#inicio">Início</a>
                     <a href="#documentos">Documentos</a>
                     <a href="#guia">Guia</a>
+                    <a href="#painel">Painel</a>
                     <a href="#assistentes">Assistentes</a>
                     <a href="#avisos">Avisos</a>
                     <a href="#contato">Contato</a>
@@ -732,17 +733,27 @@
             </div>
         </section>
 
-        <div id="painel">
-            <div>
-                <h2><i class="fas fa-chart-line" style="color:var(--cyan); margin-right:8px;"></i> Painel Operacional</h2>
-                <p>Resumo em tempo real dos principais indicadores da Segurança Operacional.</p>
-            </div>
+        <section id="painel">
+            <h2><i class="fas fa-chart-line" style="color:var(--cyan); margin-right:8px;"></i> Painel Operacional</h2>
 
-            <a href="painel.html" class="btn">
-                <i class="fas fa-chart-pie"></i>
-                Abrir Dashboard Completo
-            </a>
-        </div>
+            <div class="cards" style="grid-template-columns: 1fr;">
+                <div class="card" style="flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+                    <div style="display: flex; align-items: center; gap: 20px; flex: 1; min-width: 260px;">
+                        <i class="fas fa-chart-pie" style="font-size: 2.2rem; margin-bottom: 0;"></i>
+                        <div>
+                            <h3>Dashboard Completo</h3>
+                            <p style="margin-bottom: 0;">
+                                Resumo em tempo real dos principais indicadores da Segurança Operacional.
+                            </p>
+                        </div>
+                    </div>
+
+                    <a class="btn-menu" href="painel.html" style="width: auto; padding: 12px 24px;">
+                        Abrir Dashboard <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <section id="guia" style="border-bottom: none;">
             <h2>Guia</h2>
