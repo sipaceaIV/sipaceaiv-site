@@ -289,21 +289,14 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LÓGICO -->
+    <!-- JAVASCRIPT LÓGICO CORRIGIDO -->
     <script>
         const urlPlanilha = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSX7s4aSmpcMzQZp6m3bASQkjLZjXG337Fsc9SwUbA6j5Fqj4ifgdL5g8KsWpZB1Oi1M2PAW9V40O5x/pub?gid=0&single=true&output=csv";
 
         let graficoProporcao = null;
         let graficoMensal = null;
 
-        function normalizarTexto(texto) {
-            return String(texto || "")
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .toUpperCase()
-                .trim();
-        }
-
+        // --- FUNÇÃO CORRIGIDA PARA PARSE DE CSV (LIDA COM ASPAS E QUEBRAS DE LINHA) ---
         function interpretarCSV(texto) {
             const linhas = [];
             let linha = [];
@@ -312,6 +305,7 @@
 
             for (let i = 0; i < texto.length; i++) {
                 const caractere = texto[i];
+
                 if (caractere === '"') {
                     if (dentroAspas && texto[i + 1] === '"') {
                         campo += '"';
@@ -333,12 +327,23 @@
                 }
             }
 
+            // Adiciona o último campo/linha se houver
             if (campo !== "" || linha.length > 0) {
                 linha.push(campo);
                 if (linha.some(c => c.trim() !== "")) linhas.push(linha);
             }
 
+            // Remove BOM e espaços extras
             return linhas.map(l => l.map(c => c.replace(/^\uFEFF/, "").trim()));
+        }
+
+        // --- NORMALIZAÇÃO E MAPEAMENTO ---
+        function normalizarTexto(texto) {
+            return String(texto || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toUpperCase()
+                .trim();
         }
 
         function localizarColuna(cabecalho, nomes) {
@@ -362,6 +367,7 @@
             if (!valor) return null;
             const texto = String(valor).trim();
 
+            // Tenta formatos dd/mm/aaaa ou aaaa-mm-dd
             let res = texto.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
             if (res) return new Date(Number(res[3]), Number(res[2]) - 1, Number(res[1]));
 
@@ -382,7 +388,7 @@
             return nomesMeses[data.getMonth()] + "/" + data.getFullYear();
         }
 
-        /* INICIALIZAÇÃO E ATUALIZAÇÃO DOS GRÁFICOS DO CHART.JS */
+        // --- INICIALIZAÇÃO DOS GRÁFICOS ---
         function inicializarGraficoProporcao() {
             const ctx = document.getElementById("graficoProporcao").getContext("2d");
             graficoProporcao = new Chart(ctx, {
@@ -433,7 +439,7 @@
             });
         }
 
-        /* CARREGAMENTO PRINCIPAL DOS DADOS */
+        // --- CARREGAMENTO PRINCIPAL DOS DADOS ---
         async function carregarDados() {
             const icone = document.getElementById("icone-atualizar");
             if (icone) icone.classList.add("fa-spin");
@@ -443,12 +449,18 @@
                 const csvTexto = await resposta.text();
                 const linhas = interpretarCSV(csvTexto);
 
-                if (linhas.length < 2) return;
+                if (linhas.length < 2) {
+                    console.warn("CSV com menos de 2 linhas.");
+                    return;
+                }
 
                 const cabecalho = linhas[0];
+                // Busca pelas colunas necessárias
                 const idxOrigem = localizarColuna(cabecalho, ["origem", "tipo_documento", "tipo documentação", "tipo"]);
                 const idxData = localizarColuna(cabecalho, ["data", "data_ocorrencia", "data da ocorrência"]);
-                const idxTipoOcorrencia = localizarColuna(cabecalho, ["tipo_ocorrencia", "tipo de ocorrência", "ocorrencia", "tipo ocorrencia"]);
+                const idxTipoOcorrencia = localizarColuna(cabecalho, ["tipo_ocorrencia", "tipo de ocorrência", "ocorrencia", "tipo ocorrencia", "tipo da ocorrência"]);
+
+                console.log("Colunas encontradas:", { idxOrigem, idxData, idxTipoOcorrencia });
 
                 let totalFNO = 0;
                 let totalRELPREV = 0;
@@ -457,6 +469,9 @@
 
                 for (let i = 1; i < linhas.length; i++) {
                     const linha = linhas[i];
+                    // Pula linhas completamente vazias
+                    if (linha.every(campo => campo === "")) continue;
+
                     const origemRaw = idxOrigem !== -1 ? linha[idxOrigem] : "";
                     const origem = identificarOrigem(origemRaw);
 
@@ -480,7 +495,7 @@
                     }
                 }
 
-                // Atualizar Cards
+                // --- ATUALIZA CARDS ---
                 const totalGeral = totalFNO + totalRELPREV;
                 document.getElementById("total-fno").innerText = totalFNO;
                 document.getElementById("total-relprev").innerText = totalRELPREV;
@@ -503,13 +518,13 @@
                 document.getElementById("tipo-predominante").innerText = tipoMaisFreq;
                 document.getElementById("quantidade-tipo").innerText = maxQtd > 0 ? `${maxQtd} ocorrências registradas` : "—";
 
-                // Atualizar Gráfico Proporção
+                // --- ATUALIZA GRÁFICO DE PROPORÇÃO ---
                 if (graficoProporcao) {
                     graficoProporcao.data.datasets[0].data = [totalFNO, totalRELPREV];
                     graficoProporcao.update();
                 }
 
-                // Processar Dados Mensais
+                // --- PROCESSAR E ATUALIZAR TABELA E GRÁFICO MENSAL ---
                 const mesesOrdenados = Object.keys(dadosMensais).sort();
                 const labelsMensais = [];
                 const arrFNO = [];
@@ -554,23 +569,27 @@
                     graficoMensal.update();
                 }
 
-                // Atualizar Ranking
+                // --- ATUALIZA RANKING DE TIPOS ---
                 const rankingContainer = document.getElementById("ranking-tipos");
                 rankingContainer.innerHTML = "";
                 const rankingOrdenado = Object.entries(tiposContagem).sort((a, b) => b[1] - a[1]);
 
-                rankingOrdenado.slice(0, 9).forEach(([tipo, count], idx) => {
-                    const card = document.createElement("div");
-                    card.className = "bg-slate-950/40 border border-slate-800/80 p-3 rounded-xl flex items-center justify-between";
-                    card.innerHTML = `
-                        <div class="flex items-center gap-3 overflow-hidden">
-                            <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold">${idx + 1}</span>
-                            <span class="text-sm font-medium text-slate-200 truncate" title="${tipo}">${tipo}</span>
-                        </div>
-                        <span class="text-xs font-extrabold px-2 py-1 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20">${count}</span>
-                    `;
-                    rankingContainer.appendChild(card);
-                });
+                if (rankingOrdenado.length === 0) {
+                    rankingContainer.innerHTML = `<div class="text-slate-500 text-sm col-span-full">Nenhum tipo de ocorrência registrado.</div>`;
+                } else {
+                    rankingOrdenado.slice(0, 9).forEach(([tipo, count], idx) => {
+                        const card = document.createElement("div");
+                        card.className = "bg-slate-950/40 border border-slate-800/80 p-3 rounded-xl flex items-center justify-between";
+                        card.innerHTML = `
+                            <div class="flex items-center gap-3 overflow-hidden">
+                                <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold">${idx + 1}</span>
+                                <span class="text-sm font-medium text-slate-200 truncate" title="${tipo}">${tipo}</span>
+                            </div>
+                            <span class="text-xs font-extrabold px-2 py-1 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20">${count}</span>
+                        `;
+                        rankingContainer.appendChild(card);
+                    });
+                }
 
                 const agora = new Date();
                 document.getElementById("atualizacao").innerText = "Atualizado às " + agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
@@ -583,13 +602,11 @@
             }
         }
 
-        // Inicializar aplicação
+        // --- INICIALIZAÇÃO ---
         window.addEventListener("DOMContentLoaded", () => {
             inicializarGraficoProporcao();
             inicializarGraficoMensal();
             carregarDados();
-
-            // Auto-atualização a cada 5 minutos
             setInterval(carregarDados, 5 * 60 * 1000);
         });
     </script>
