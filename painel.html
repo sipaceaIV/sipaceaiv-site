@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 
@@ -38,14 +37,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -94,2113 +89,509 @@
 
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col">
 
-    <!-- ========================================================= -->
     <!-- HEADER -->
-    <!-- ========================================================= -->
-
     <header class="border-b border-slate-800 bg-slate-900/90 sticky top-0 z-50 backdrop-blur-md">
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-
-            <!-- Identificação -->
             <div class="flex items-center gap-4">
-
-                <div
-                    class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600
-                           flex items-center justify-center shadow-lg shadow-blue-500/20
-                           border border-blue-400/30">
-
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 border border-blue-400/30">
                     <i class="fa-solid fa-plane-departure text-xl text-white"></i>
-
                 </div>
-
                 <div>
-
                     <div class="flex items-center gap-2">
-
-                        <span
-                            class="text-xs text-blue-400 font-semibold tracking-wider uppercase">
+                        <span class="text-xs text-blue-400 font-semibold tracking-wider uppercase">
                             Força Aérea Brasileira
                         </span>
-
                     </div>
-
-                    <h1
-                        class="text-xl sm:text-2xl font-bold tracking-tight text-white
-                               flex items-center gap-2">
-
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
                         CINDACTA IV
-
-                        <span
-                            class="text-xs font-normal text-slate-400 hidden sm:inline-block">
+                        <span class="text-xs font-normal text-slate-400 hidden sm:inline-block">
                             | SIPACEA IV
                         </span>
-
                     </h1>
-
                 </div>
-
             </div>
-
-
-            <!-- Status / Atualização -->
 
             <div class="flex items-center gap-3">
-
                 <div class="hidden md:flex flex-col items-end mr-2 text-right">
-
-                    <span
-                        class="text-xs text-slate-400 flex items-center gap-1.5">
-
-                        <span
-                            id="status-dot"
-                            class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse">
-                        </span>
-
-                        <span id="atualizacao">
-                            Carregando dados...
-                        </span>
-
+                    <span class="text-xs text-slate-400 flex items-center gap-1.5">
+                        <span id="status-dot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="atualizacao">Carregando dados...</span>
                     </span>
-
-                    <span class="text-[10px] text-slate-500">
-                        Auto-atualização a cada 5 min
-                    </span>
-
+                    <span class="text-[10px] text-slate-500">Auto-atualização a cada 5 min</span>
                 </div>
 
-
-                <button
-                    id="atualizar"
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg
-                           bg-blue-600 hover:bg-blue-500 text-white text-sm
-                           font-medium transition-all shadow-md
-                           hover:shadow-blue-500/25 active:scale-95 cursor-pointer">
-
-                    <i
-                        id="icone-atualizar"
-                        class="fa-solid fa-rotate">
-                    </i>
-
-                    <span class="hidden sm:inline">
-                        Atualizar Dados
-                    </span>
-
+                <button id="atualizar" onclick="carregarDados()" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-all shadow-md hover:shadow-blue-500/25 active:scale-95 cursor-pointer">
+                    <i id="icone-atualizar" class="fa-solid fa-rotate"></i>
+                    <span class="hidden sm:inline">Atualizar Dados</span>
                 </button>
-
             </div>
-
         </div>
-
     </header>
 
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-    <!-- ========================================================= -->
-    <!-- CONTEÚDO -->
-    <!-- ========================================================= -->
-
-    <main
-        class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-
-
-        <!-- ===================================================== -->
-        <!-- INDICADORES -->
-        <!-- ===================================================== -->
-
-        <section
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
-
+        <!-- INDICADORES (CARDS) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <!-- FNO -->
-
-            <div
-                class="bg-slate-900/60 border border-slate-800/80 rounded-2xl
-                       p-5 relative overflow-hidden group
-                       hover:border-blue-500/50 transition-all duration-300">
-
-                <div
-                    class="absolute -right-4 -bottom-4 w-24 h-24
-                           bg-blue-500/10 rounded-full blur-xl">
-                </div>
-
+            <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 relative overflow-hidden group hover:border-blue-500/50 transition-all duration-300">
+                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-blue-500/10 rounded-full blur-xl"></div>
                 <div class="flex items-center justify-between">
-
-                    <span
-                        class="text-xs font-semibold text-blue-400
-                               tracking-wider uppercase">
-
-                        Fichas de Ocorrência
-
-                    </span>
-
-                    <div
-                        class="p-2 rounded-lg bg-blue-500/10
-                               text-blue-400 border border-blue-500/20">
-
+                    <span class="text-xs font-semibold text-blue-400 tracking-wider uppercase">Fichas de Ocorrência</span>
+                    <div class="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
                         <i class="fa-solid fa-file-circle-exclamation text-lg"></i>
-
                     </div>
-
                 </div>
-
                 <div class="mt-4">
-
-                    <span
-                        id="total-fno"
-                        class="text-4xl font-extrabold text-white tracking-tight">
-
-                        —
-
-                    </span>
-
+                    <span id="total-fno" class="text-4xl font-extrabold text-white tracking-tight">—</span>
                 </div>
-
-                <p class="mt-2 text-xs text-slate-400">
-                    Total de FNO registradas
-                </p>
-
+                <p class="mt-2 text-xs text-slate-400">Total de FNO registradas</p>
             </div>
-
 
             <!-- RELPREV -->
-
-            <div
-                class="bg-slate-900/60 border border-slate-800/80 rounded-2xl
-                       p-5 relative overflow-hidden group
-                       hover:border-amber-500/50 transition-all duration-300">
-
-                <div
-                    class="absolute -right-4 -bottom-4 w-24 h-24
-                           bg-amber-500/10 rounded-full blur-xl">
-                </div>
-
+            <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 relative overflow-hidden group hover:border-amber-500/50 transition-all duration-300">
+                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-amber-500/10 rounded-full blur-xl"></div>
                 <div class="flex items-center justify-between">
-
-                    <span
-                        class="text-xs font-semibold text-amber-400
-                               tracking-wider uppercase">
-
-                        Relatórios de Prevenção
-
-                    </span>
-
-                    <div
-                        class="p-2 rounded-lg bg-amber-500/10
-                               text-amber-400 border border-amber-500/20">
-
+                    <span class="text-xs font-semibold text-amber-400 tracking-wider uppercase">Relatórios de Prevenção</span>
+                    <div class="p-2 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
                         <i class="fa-solid fa-shield-halved text-lg"></i>
-
                     </div>
-
                 </div>
-
                 <div class="mt-4">
-
-                    <span
-                        id="total-relprev"
-                        class="text-4xl font-extrabold text-white tracking-tight">
-
-                        —
-
-                    </span>
-
+                    <span id="total-relprev" class="text-4xl font-extrabold text-white tracking-tight">—</span>
                 </div>
-
-                <p class="mt-2 text-xs text-slate-400">
-                    Total de RELPREV registrados
-                </p>
-
+                <p class="mt-2 text-xs text-slate-400">Total de RELPREV registrados</p>
             </div>
 
-
-            <!-- TOTAL -->
-
-            <div
-                class="bg-slate-900/60 border border-slate-800/80 rounded-2xl
-                       p-5 relative overflow-hidden group
-                       hover:border-emerald-500/50 transition-all duration-300">
-
-                <div
-                    class="absolute -right-4 -bottom-4 w-24 h-24
-                           bg-emerald-500/10 rounded-full blur-xl">
-                </div>
-
+            <!-- TOTAL GERAL -->
+            <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 relative overflow-hidden group hover:border-emerald-500/50 transition-all duration-300">
+                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl"></div>
                 <div class="flex items-center justify-between">
-
-                    <span
-                        class="text-xs font-semibold text-emerald-400
-                               tracking-wider uppercase">
-
-                        Total de Ocorrências
-
-                    </span>
-
-                    <div
-                        class="p-2 rounded-lg bg-emerald-500/10
-                               text-emerald-400 border border-emerald-500/20">
-
+                    <span class="text-xs font-semibold text-emerald-400 tracking-wider uppercase">Total de Ocorrências</span>
+                    <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                         <i class="fa-solid fa-chart-simple text-lg"></i>
-
                     </div>
-
                 </div>
-
                 <div class="mt-4">
-
-                    <span
-                        id="total-geral"
-                        class="text-4xl font-extrabold text-white tracking-tight">
-
-                        —
-
-                    </span>
-
+                    <span id="total-geral" class="text-4xl font-extrabold text-white tracking-tight">—</span>
                 </div>
-
-                <p class="mt-2 text-xs text-slate-400">
-                    FNO + RELPREV
-                </p>
-
+                <p class="mt-2 text-xs text-slate-400">FNO + RELPREV</p>
             </div>
-
 
             <!-- TIPO PREDOMINANTE -->
-
-            <div
-                class="bg-slate-900/60 border border-slate-800/80 rounded-2xl
-                       p-5 relative overflow-hidden group
-                       hover:border-purple-500/50 transition-all duration-300">
-
-                <div
-                    class="absolute -right-4 -bottom-4 w-24 h-24
-                           bg-purple-500/10 rounded-full blur-xl">
-                </div>
-
+            <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300">
+                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-purple-500/10 rounded-full blur-xl"></div>
                 <div class="flex items-center justify-between">
-
-                    <span
-                        class="text-xs font-semibold text-purple-400
-                               tracking-wider uppercase">
-
-                        Tipo de Ocorrência
-
-                    </span>
-
-                    <div
-                        class="p-2 rounded-lg bg-purple-500/10
-                               text-purple-400 border border-purple-500/20">
-
+                    <span class="text-xs font-semibold text-purple-400 tracking-wider uppercase">Tipo Mais Frequente</span>
+                    <div class="p-2 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20">
                         <i class="fa-solid fa-layer-group text-lg"></i>
-
                     </div>
-
                 </div>
-
                 <div class="mt-4">
-
-                    <span
-                        id="tipo-predominante"
-                        class="text-xl font-bold text-white
-                               tracking-tight truncate block">
-
-                        —
-
-                    </span>
-
+                    <span id="tipo-predominante" class="text-xl font-bold text-white tracking-tight truncate block">—</span>
                 </div>
-
-                <p
-                    id="quantidade-tipo"
-                    class="mt-2 text-xs text-slate-400">
-
-                    —
-
-                </p>
-
+                <p id="quantidade-tipo" class="mt-2 text-xs text-slate-400">—</p>
             </div>
-
         </section>
 
-
-        <!-- ===================================================== -->
-        <!-- GRÁFICO FNO X RELPREV -->
-        <!-- ===================================================== -->
-
-        <section
-            class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-
+        <!-- GRÁFICOS -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Proporção -->
-
-            <div
-                class="bg-slate-900/60 border border-slate-800/80
-                       rounded-2xl p-6">
-
+            <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6">
                 <div class="mb-5">
-
-                    <h2
-                        class="text-lg font-bold text-white
-                               flex items-center gap-2">
-
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
                         <i class="fa-solid fa-chart-pie text-blue-400"></i>
-
                         Proporção de Ocorrências
-
                     </h2>
-
-                    <p class="text-xs text-slate-400 mt-1">
-                        Comparação entre FNO e RELPREV
-                    </p>
-
+                    <p class="text-xs text-slate-400 mt-1">Comparação entre FNO e RELPREV</p>
                 </div>
-
                 <div class="relative h-80">
-
                     <canvas id="graficoProporcao"></canvas>
-
                 </div>
-
-                <div
-                    class="grid grid-cols-2 gap-4 mt-5 pt-4
-                           border-t border-slate-800/80 text-center">
-
-                    <div
-                        class="bg-slate-950/50 border border-blue-500/30
-                               rounded-xl p-3">
-
-                        <span
-                            class="text-xs font-bold text-slate-300">
-                            FNO
-                        </span>
-
-                        <div
-                            id="valor-visivel-fno"
-                            class="text-lg font-extrabold text-blue-400 mt-1">
-
-                            0 (0%)
-
-                        </div>
-
+                <div class="grid grid-cols-2 gap-4 mt-5 pt-4 border-t border-slate-800/80 text-center">
+                    <div class="bg-slate-950/50 border border-blue-500/30 rounded-xl p-3">
+                        <span class="text-xs font-bold text-slate-300">FNO</span>
+                        <div id="valor-visivel-fno" class="text-lg font-extrabold text-blue-400 mt-1">0 (0%)</div>
                     </div>
-
-                    <div
-                        class="bg-slate-950/50 border border-amber-500/30
-                               rounded-xl p-3">
-
-                        <span
-                            class="text-xs font-bold text-slate-300">
-                            RELPREV
-                        </span>
-
-                        <div
-                            id="valor-visivel-relprev"
-                            class="text-lg font-extrabold text-amber-400 mt-1">
-
-                            0 (0%)
-
-                        </div>
-
+                    <div class="bg-slate-950/50 border border-amber-500/30 rounded-xl p-3">
+                        <span class="text-xs font-bold text-slate-300">RELPREV</span>
+                        <div id="valor-visivel-relprev" class="text-lg font-extrabold text-amber-400 mt-1">0 (0%)</div>
                     </div>
-
                 </div>
-
             </div>
 
-
-            <!-- Tendência -->
-
-            <div
-                class="bg-slate-900/60 border border-slate-800/80
-                       rounded-2xl p-6">
-
+            <!-- Evolução Mensal -->
+            <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6">
                 <div class="mb-5">
-
-                    <h2
-                        class="text-lg font-bold text-white
-                               flex items-center gap-2">
-
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
                         <i class="fa-solid fa-chart-line text-emerald-400"></i>
-
                         Evolução Mensal
-
                     </h2>
-
-                    <p class="text-xs text-slate-400 mt-1">
-                        Quantidade de ocorrências por mês
-                    </p>
-
+                    <p class="text-xs text-slate-400 mt-1">Quantidade de ocorrências por mês</p>
                 </div>
-
                 <div class="relative h-80">
-
                     <canvas id="graficoMensal"></canvas>
-
                 </div>
-
             </div>
-
         </section>
 
-
-        <!-- ===================================================== -->
-        <!-- TENDÊNCIA DE TIPO -->
-        <!-- ===================================================== -->
-
-        <section
-            class="bg-slate-900/60 border border-slate-800/80
-                   rounded-2xl p-6">
-
+        <!-- TABELA DE TENDÊNCIA MENSAL -->
+        <section class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6">
             <div class="mb-6">
-
-                <h2
-                    class="text-lg font-bold text-white
-                           flex items-center gap-2">
-
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-ranking-star text-purple-400"></i>
-
                     Tendência Mensal por Tipo de Ocorrência
-
                 </h2>
-
-                <p class="text-xs text-slate-400 mt-1">
-
-                    Identificação automática do tipo de ocorrência
-                    mais frequente em cada mês.
-
-                </p>
-
+                <p class="text-xs text-slate-400 mt-1">Identificação automática do tipo de ocorrência mais frequente em cada mês.</p>
             </div>
-
-
-            <!-- Tabela -->
-
             <div class="overflow-x-auto scrollbar">
-
                 <table class="w-full text-sm">
-
                     <thead>
-
-                        <tr
-                            class="border-b border-slate-800
-                                   text-slate-400 text-xs uppercase">
-
-                            <th class="text-left px-4 py-3">
-                                Mês
-                            </th>
-
-                            <th class="text-center px-4 py-3">
-                                FNO
-                            </th>
-
-                            <th class="text-center px-4 py-3">
-                                RELPREV
-                            </th>
-
-                            <th class="text-center px-4 py-3">
-                                Total
-                            </th>
-
-                            <th class="text-left px-4 py-3">
-                                Tipo de ocorrência predominante
-                            </th>
-
-                            <th class="text-center px-4 py-3">
-                                Quantidade
-                            </th>
-
+                        <tr class="border-b border-slate-800 text-slate-400 text-xs uppercase">
+                            <th class="text-left px-4 py-3">Mês</th>
+                            <th class="text-center px-4 py-3">FNO</th>
+                            <th class="text-center px-4 py-3">RELPREV</th>
+                            <th class="text-center px-4 py-3">Total</th>
+                            <th class="text-left px-4 py-3">Tipo de Ocorrência Predominante</th>
+                            <th class="text-center px-4 py-3">Qtd. Predominante</th>
                         </tr>
-
                     </thead>
-
-                    <tbody
-                        id="tabela-mensal"
-                        class="divide-y divide-slate-800">
-
+                    <tbody id="tabela-mensal" class="divide-y divide-slate-800">
                         <tr>
-
-                            <td
-                                colspan="6"
-                                class="text-center py-8
-                                       text-slate-500">
-
-                                Carregando dados...
-
-                            </td>
-
+                            <td colspan="6" class="text-center py-8 text-slate-500">Carregando dados...</td>
                         </tr>
-
                     </tbody>
-
                 </table>
-
             </div>
-
         </section>
 
-
-        <!-- ===================================================== -->
-        <!-- TIPOS MAIS FREQUENTES -->
-        <!-- ===================================================== -->
-
-        <section
-            class="bg-slate-900/60 border border-slate-800/80
-                   rounded-2xl p-6">
-
+        <!-- RANKING DE TIPOS -->
+        <section class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6">
             <div class="mb-6">
-
-                <h2
-                    class="text-lg font-bold text-white
-                           flex items-center gap-2">
-
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-list-ol text-blue-400"></i>
-
                     Tipos de Ocorrência Mais Frequentes
-
                 </h2>
-
-                <p class="text-xs text-slate-400 mt-1">
-                    Ranking geral dos tipos registrados na base.
-                </p>
-
+                <p class="text-xs text-slate-400 mt-1">Ranking geral dos tipos registrados na base.</p>
             </div>
-
-            <div
-                id="ranking-tipos"
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
-                       gap-3">
-
-                <div class="text-slate-500 text-sm">
-                    Carregando...
-                </div>
-
+            <div id="ranking-tipos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div class="text-slate-500 text-sm">Carregando...</div>
             </div>
-
         </section>
 
     </main>
 
-
-    <!-- ========================================================= -->
     <!-- FOOTER -->
-    <!-- ========================================================= -->
-
-    <footer
-        class="border-t border-slate-800/80
-               bg-slate-950 py-6 mt-auto">
-
-        <div
-            class="max-w-7xl mx-auto px-4 text-center
-                   text-xs text-slate-500">
-
-            <p>
-                SISTEMA DE ACOMPANHAMENTO DE OCORRÊNCIAS -
-                CINDACTA IV / SIPACEA IV
-            </p>
-
-            <p class="mt-1">
-                Conexão direta com planilha de dados via Google Sheets CSV.
-            </p>
-
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            <p>SISTEMA DE ACOMPANHAMENTO DE OCORRÊNCIAS - CINDACTA IV / SIPACEA IV</p>
+            <p class="mt-1">Conexão direta com planilha de dados via Google Sheets CSV.</p>
         </div>
-
     </footer>
 
-
-    <!-- ========================================================= -->
-    <!-- JAVASCRIPT -->
-    <!-- ========================================================= -->
-
+    <!-- JAVASCRIPT LÓGICO -->
     <script>
-
-        /* =======================================================
-           CONFIGURAÇÃO
-        ======================================================= */
-
-        const urlPlanilha =
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vSX7s4aSmpcMzQZp6m3bASQkjLZjXG337Fsc9SwUbA6j5Fqj4ifgdL5g8KsWpZB1Oi1M2PAW9V40O5x/pub?gid=0&single=true&output=csv";
-
+        const urlPlanilha = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSX7s4aSmpcMzQZp6m3bASQkjLZjXG337Fsc9SwUbA6j5Fqj4ifgdL5g8KsWpZB1Oi1M2PAW9V40O5x/pub?gid=0&single=true&output=csv";
 
         let graficoProporcao = null;
         let graficoMensal = null;
 
-
-        /* =======================================================
-           UTILITÁRIOS
-        ======================================================= */
-
         function normalizarTexto(texto) {
-
             return String(texto || "")
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "")
                 .toUpperCase()
                 .trim();
-
         }
 
-
         function interpretarCSV(texto) {
-
             const linhas = [];
             let linha = [];
             let campo = "";
             let dentroAspas = false;
 
             for (let i = 0; i < texto.length; i++) {
-
                 const caractere = texto[i];
-
                 if (caractere === '"') {
-
-                    if (
-                        dentroAspas &&
-                        texto[i + 1] === '"'
-                    ) {
-
+                    if (dentroAspas && texto[i + 1] === '"') {
                         campo += '"';
                         i++;
-
                     } else {
-
                         dentroAspas = !dentroAspas;
-
                     }
-
-                }
-
-                else if (
-                    caractere === "," &&
-                    !dentroAspas
-                ) {
-
+                } else if (caractere === "," && !dentroAspas) {
                     linha.push(campo);
                     campo = "";
-
-                }
-
-                else if (
-                    (caractere === "\n" ||
-                     caractere === "\r") &&
-                    !dentroAspas
-                ) {
-
-                    if (
-                        caractere === "\r" &&
-                        texto[i + 1] === "\n"
-                    ) {
-                        i++;
-                    }
-
+                } else if ((caractere === "\n" || caractere === "\r") && !dentroAspas) {
+                    if (caractere === "\r" && texto[i + 1] === "\n") i++;
                     linha.push(campo);
                     campo = "";
-
-                    if (linha.some(c => c.trim() !== "")) {
-                        linhas.push(linha);
-                    }
-
+                    if (linha.some(c => c.trim() !== "")) linhas.push(linha);
                     linha = [];
-
-                }
-
-                else {
-
+                } else {
                     campo += caractere;
-
                 }
-
             }
-
 
             if (campo !== "" || linha.length > 0) {
-
                 linha.push(campo);
-
-                if (linha.some(c => c.trim() !== "")) {
-                    linhas.push(linha);
-                }
-
+                if (linha.some(c => c.trim() !== "")) linhas.push(linha);
             }
 
-
-            return linhas.map(l =>
-                l.map(c =>
-                    c
-                        .replace(/^\uFEFF/, "")
-                        .trim()
-                )
-            );
-
+            return linhas.map(l => l.map(c => c.replace(/^\uFEFF/, "").trim()));
         }
-
-
-        /* =======================================================
-           LOCALIZAR COLUNAS PELO NOME
-        ======================================================= */
 
         function localizarColuna(cabecalho, nomes) {
-
-            const normalizados =
-                cabecalho.map(normalizarTexto);
-
+            const normalizados = cabecalho.map(normalizarTexto);
             for (const nome of nomes) {
-
                 const alvo = normalizarTexto(nome);
-
-                const indice =
-                    normalizados.indexOf(alvo);
-
-                if (indice !== -1) {
-                    return indice;
-                }
-
+                const indice = normalizados.indexOf(alvo);
+                if (indice !== -1) return indice;
             }
-
             return -1;
-
         }
-
-
-        /* =======================================================
-           NORMALIZAR ORIGEM
-        ======================================================= */
 
         function identificarOrigem(valor) {
-
-            const origem =
-                normalizarTexto(valor)
-                    .replace(/-/g, " ")
-                    .replace(/\s+/g, " ");
-
-            if (origem.includes("FNO")) {
-                return "FNO";
-            }
-
-            if (origem.includes("RELPREV")) {
-                return "RELPREV";
-            }
-
+            const origem = normalizarTexto(valor).replace(/-/g, " ").replace(/\s+/g, " ");
+            if (origem.includes("FNO")) return "FNO";
+            if (origem.includes("RELPREV")) return "RELPREV";
             return "";
-
         }
-
-
-        /* =======================================================
-           PARSE DA DATA
-        ======================================================= */
 
         function interpretarData(valor) {
-
-            if (!valor) {
-                return null;
-            }
-
+            if (!valor) return null;
             const texto = String(valor).trim();
 
-            /* DD/MM/YYYY */
+            let res = texto.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+            if (res) return new Date(Number(res[3]), Number(res[2]) - 1, Number(res[1]));
 
-            let resultado =
-                texto.match(
-                    /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/
-                );
+            res = texto.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+            if (res) return new Date(Number(res[1]), Number(res[2]) - 1, Number(res[3]));
 
-            if (resultado) {
-
-                const dia = Number(resultado[1]);
-                const mes = Number(resultado[2]) - 1;
-                const ano = Number(resultado[3]);
-
-                const data =
-                    new Date(
-                        ano,
-                        mes,
-                        dia
-                    );
-
-                if (!isNaN(data.getTime())) {
-                    return data;
-                }
-
-            }
-
-
-            /* YYYY-MM-DD */
-
-            resultado =
-                texto.match(
-                    /^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/
-                );
-
-            if (resultado) {
-
-                const ano = Number(resultado[1]);
-                const mes = Number(resultado[2]) - 1;
-                const dia = Number(resultado[3]);
-
-                const data =
-                    new Date(
-                        ano,
-                        mes,
-                        dia
-                    );
-
-                if (!isNaN(data.getTime())) {
-                    return data;
-                }
-
-            }
-
-
-            /* Última tentativa */
-
-            const data =
-                new Date(texto);
-
-            if (!isNaN(data.getTime())) {
-                return data;
-            }
-
-            return null;
-
+            const data = new Date(texto);
+            return isNaN(data.getTime()) ? null : data;
         }
 
-
-        /* =======================================================
-           FORMATAR MÊS
-        ======================================================= */
-
-        const nomesMeses = [
-            "Janeiro",
-            "Fevereiro",
-            "Março",
-            "Abril",
-            "Maio",
-            "Junho",
-            "Julho",
-            "Agosto",
-            "Setembro",
-            "Outubro",
-            "Novembro",
-            "Dezembro"
-        ];
-
+        const nomesMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         function chaveMes(data) {
-
-            return (
-                data.getFullYear() +
-                "-" +
-                String(data.getMonth() + 1).padStart(2, "0")
-            );
-
+            return data.getFullYear() + "-" + String(data.getMonth() + 1).padStart(2, "0");
         }
-
 
         function nomeMes(data) {
-
-            return (
-                nomesMeses[data.getMonth()] +
-                "/" +
-                data.getFullYear()
-            );
-
+            return nomesMeses[data.getMonth()] + "/" + data.getFullYear();
         }
 
-
-        /* =======================================================
-           GRÁFICO FNO X RELPREV
-        ======================================================= */
-
+        /* INICIALIZAÇÃO E ATUALIZAÇÃO DOS GRÁFICOS DO CHART.JS */
         function inicializarGraficoProporcao() {
-
-            const ctx =
-                document
-                    .getElementById("graficoProporcao")
-                    .getContext("2d");
-
-
-            graficoProporcao =
-                new Chart(ctx, {
-
-                    type: "doughnut",
-
-                    data: {
-
-                        labels: [
-                            "FNO",
-                            "RELPREV"
-                        ],
-
-                        datasets: [{
-
-                            data: [
-                                0,
-                                0
-                            ],
-
-                            backgroundColor: [
-                                "#3b82f6",
-                                "#f59e0b"
-                            ],
-
-                            borderColor: [
-                                "#1d4ed8",
-                                "#d97706"
-                            ],
-
-                            borderWidth: 2,
-
-                            hoverOffset: 6
-
-                        }]
-
-                    },
-
-
-                    options: {
-
-                        responsive: true,
-
-                        maintainAspectRatio: false,
-
-                        cutout: "65%",
-
-                        plugins: {
-
-                            legend: {
-
-                                display: true,
-
-                                position: "bottom",
-
-                                labels: {
-
-                                    color: "#94a3b8",
-
-                                    font: {
-                                        family: "Inter",
-                                        size: 12,
-                                        weight: "bold"
-                                    },
-
-                                    padding: 20,
-
-                                    usePointStyle: true
-
-                                }
-
-                            },
-
-
-                            tooltip: {
-                                enabled: true
-                            },
-
-
-                            datalabels: {
-
-                                color: "#ffffff",
-
-                                font: {
-
-                                    family: "Inter",
-
-                                    weight: "bold",
-
-                                    size: 13
-
-                                },
-
-
-                                formatter:
-                                    function(value, ctx) {
-
-                                        const dados =
-                                            ctx.chart
-                                                .data
-                                                .datasets[0]
-                                                .data;
-
-                                        const total =
-                                            dados.reduce(
-                                                (a, b) =>
-                                                    a + Number(b),
-                                                0
-                                            );
-
-                                        if (
-                                            total === 0 ||
-                                            value === 0
-                                        ) {
-                                            return "";
-                                        }
-
-                                        const percentual =
-                                            (
-                                                value *
-                                                100 /
-                                                total
-                                            ).toFixed(1);
-
-                                        return (
-                                            value +
-                                            "\n(" +
-                                            percentual +
-                                            "%)"
-                                        );
-
-                                    },
-
-                                textAlign: "center"
-
-                            }
-
-                        }
-
+            const ctx = document.getElementById("graficoProporcao").getContext("2d");
+            graficoProporcao = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["FNO", "RELPREV"],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ["#3b82f6", "#f59e0b"],
+                        borderColor: ["#1d4ed8", "#d97706"],
+                        borderWidth: 2,
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: "65%",
+                    plugins: {
+                        legend: { display: true, position: "bottom", labels: { color: "#94a3b8" } }
                     }
-
-                });
-
+                }
+            });
         }
-
-
-        /* =======================================================
-           GRÁFICO MENSAL
-        ======================================================= */
 
         function inicializarGraficoMensal() {
-
-            const ctx =
-                document
-                    .getElementById("graficoMensal")
-                    .getContext("2d");
-
-
-            graficoMensal =
-                new Chart(ctx, {
-
-                    type: "line",
-
-                    data: {
-
-                        labels: [],
-
-                        datasets: [
-
-                            {
-
-                                label: "FNO",
-
-                                data: [],
-
-                                borderColor: "#3b82f6",
-
-                                backgroundColor:
-                                    "rgba(59,130,246,0.15)",
-
-                                tension: 0.35,
-
-                                fill: true,
-
-                                pointRadius: 4,
-
-                                pointHoverRadius: 7
-
-                            },
-
-                            {
-
-                                label: "RELPREV",
-
-                                data: [],
-
-                                borderColor: "#f59e0b",
-
-                                backgroundColor:
-                                    "rgba(245,158,11,0.12)",
-
-                                tension: 0.35,
-
-                                fill: true,
-
-                                pointRadius: 4,
-
-                                pointHoverRadius: 7
-
-                            }
-
-                        ]
-
+            const ctx = document.getElementById("graficoMensal").getContext("2d");
+            graficoMensal = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: [],
+                    datasets: [
+                        { label: "FNO", data: [], backgroundColor: "#3b82f6", borderRadius: 4 },
+                        { label: "RELPREV", data: [], backgroundColor: "#f59e0b", borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true, grid: { color: "#1e293b" }, ticks: { color: "#94a3b8" } },
+                        y: { stacked: true, grid: { color: "#1e293b" }, ticks: { color: "#94a3b8" } }
                     },
-
-
-                    options: {
-
-                        responsive: true,
-
-                        maintainAspectRatio: false,
-
-                        interaction: {
-                            intersect: false,
-                            mode: "index"
-                        },
-
-                        scales: {
-
-                            x: {
-
-                                ticks: {
-                                    color: "#94a3b8"
-                                },
-
-                                grid: {
-                                    color:
-                                        "rgba(51,65,85,0.35)"
-                                }
-
-                            },
-
-                            y: {
-
-                                beginAtZero: true,
-
-                                ticks: {
-                                    color: "#94a3b8",
-                                    precision: 0
-                                },
-
-                                grid: {
-                                    color:
-                                        "rgba(51,65,85,0.35)"
-                                }
-
-                            }
-
-                        },
-
-
-                        plugins: {
-
-                            legend: {
-
-                                labels: {
-
-                                    color: "#cbd5e1",
-
-                                    font: {
-                                        family: "Inter",
-                                        weight: "bold"
-                                    }
-
-                                }
-
-                            }
-
-                        }
-
+                    plugins: {
+                        legend: { display: true, position: "bottom", labels: { color: "#94a3b8" } }
                     }
-
-                });
-
-        }
-
-
-        /* =======================================================
-           ATUALIZAR TABELA MENSAL
-        ======================================================= */
-
-        function atualizarTabelaMensal(meses) {
-
-            const tabela =
-                document.getElementById(
-                    "tabela-mensal"
-                );
-
-
-            tabela.innerHTML = "";
-
-
-            const lista =
-                Object.values(meses)
-                    .sort(
-                        (a, b) =>
-                            a.ordem - b.ordem
-                    );
-
-
-            if (lista.length === 0) {
-
-                tabela.innerHTML = `
-                    <tr>
-                        <td colspan="6"
-                            class="text-center py-8 text-slate-500">
-                            Não existem ocorrências com data válida.
-                        </td>
-                    </tr>
-                `;
-
-                return;
-
-            }
-
-
-            lista.forEach(mes => {
-
-                const tipos =
-                    Object.entries(
-                        mes.tipos
-                    )
-                    .sort(
-                        (a, b) =>
-                            b[1] - a[1]
-                    );
-
-
-                const maior =
-                    tipos.length
-                        ? tipos[0][1]
-                        : 0;
-
-
-                const predominantes =
-                    tipos
-                        .filter(
-                            item =>
-                                item[1] === maior
-                        )
-                        .map(
-                            item => item[0]
-                        );
-
-
-                const textoTipo =
-                    predominantes.length
-                        ? predominantes.join(" / ")
-                        : "—";
-
-
-                const linha =
-                    document.createElement("tr");
-
-
-                linha.className =
-                    "table-row transition";
-
-
-                linha.innerHTML = `
-
-                    <td class="px-4 py-4 font-semibold text-white">
-                        ${mes.nome}
-                    </td>
-
-                    <td class="px-4 py-4 text-center text-blue-400 font-bold">
-                        ${mes.fno}
-                    </td>
-
-                    <td class="px-4 py-4 text-center text-amber-400 font-bold">
-                        ${mes.relprev}
-                    </td>
-
-                    <td class="px-4 py-4 text-center text-white font-bold">
-                        ${mes.total}
-                    </td>
-
-                    <td class="px-4 py-4 text-slate-300">
-                        ${textoTipo}
-                    </td>
-
-                    <td class="px-4 py-4 text-center text-purple-400 font-bold">
-                        ${maior}
-                    </td>
-
-                `;
-
-
-                tabela.appendChild(linha);
-
+                }
             });
-
         }
 
-
-        /* =======================================================
-           RANKING DE TIPOS
-        ======================================================= */
-
-        function atualizarRankingTipos(frequencias) {
-
-            const container =
-                document.getElementById(
-                    "ranking-tipos"
-                );
-
-
-            container.innerHTML = "";
-
-
-            const ranking =
-                Object.entries(frequencias)
-                    .sort(
-                        (a, b) =>
-                            b[1] - a[1]
-                    );
-
-
-            if (!ranking.length) {
-
-                container.innerHTML =
-                    `<div class="text-slate-500 text-sm">
-                        Nenhum tipo de ocorrência encontrado.
-                    </div>`;
-
-                return;
-
-            }
-
-
-            const maior =
-                ranking[0][1];
-
-
-            ranking
-                .slice(0, 12)
-                .forEach(
-                    ([tipo, quantidade], indice) => {
-
-                        const percentual =
-                            maior > 0
-                                ? (
-                                    quantidade /
-                                    maior *
-                                    100
-                                )
-                                : 0;
-
-
-                        const card =
-                            document.createElement("div");
-
-
-                        card.className =
-                            "bg-slate-950/60 border border-slate-800 " +
-                            "rounded-xl p-4";
-
-
-                        card.innerHTML = `
-
-                            <div class="flex items-center justify-between gap-3">
-
-                                <div class="flex items-center gap-3 min-w-0">
-
-                                    <div
-                                        class="w-8 h-8 rounded-lg
-                                               bg-blue-500/10
-                                               border border-blue-500/20
-                                               flex items-center justify-center
-                                               text-blue-400 text-xs font-bold">
-
-                                        ${indice + 1}
-
-                                    </div>
-
-                                    <span
-                                        class="text-sm text-slate-300
-                                               font-medium truncate"
-                                        title="${tipo}">
-
-                                        ${tipo}
-
-                                    </span>
-
-                                </div>
-
-                                <span
-                                    class="text-sm font-extrabold
-                                           text-white">
-
-                                    ${quantidade}
-
-                                </span>
-
-                            </div>
-
-
-                            <div
-                                class="mt-3 h-1.5 bg-slate-800 rounded-full
-                                       overflow-hidden">
-
-                                <div
-                                    class="h-full bg-blue-500 rounded-full"
-                                    style="width:${percentual}%">
-
-                                </div>
-
-                            </div>
-
-                        `;
-
-
-                        container.appendChild(card);
-
-                    }
-                );
-
-        }
-
-
-        /* =======================================================
-           CARREGAR DADOS
-        ======================================================= */
-
+        /* CARREGAMENTO PRINCIPAL DOS DADOS */
         async function carregarDados() {
-
-            const atualizacao =
-                document.getElementById(
-                    "atualizacao"
-                );
-
-
-            const statusDot =
-                document.getElementById(
-                    "status-dot"
-                );
-
-
-            const icone =
-                document.getElementById(
-                    "icone-atualizar"
-                );
-
-
-            atualizacao.textContent =
-                "Atualizando dados...";
-
-
-            statusDot.className =
-                "w-2 h-2 rounded-full bg-amber-500 animate-ping";
-
-
-            icone.classList.add("fa-spin");
-
+            const icone = document.getElementById("icone-atualizar");
+            if (icone) icone.classList.add("fa-spin");
 
             try {
+                const resposta = await fetch(urlPlanilha);
+                const csvTexto = await resposta.text();
+                const linhas = interpretarCSV(csvTexto);
 
-                const resposta =
-                    await fetch(
-                        urlPlanilha +
-                        "&t=" +
-                        Date.now()
-                    );
+                if (linhas.length < 2) return;
 
+                const cabecalho = linhas[0];
+                const idxOrigem = localizarColuna(cabecalho, ["origem", "tipo_documento", "tipo documentação", "tipo"]);
+                const idxData = localizarColuna(cabecalho, ["data", "data_ocorrencia", "data da ocorrência"]);
+                const idxTipoOcorrencia = localizarColuna(cabecalho, ["tipo_ocorrencia", "tipo de ocorrência", "ocorrencia", "tipo ocorrencia"]);
 
-                if (!resposta.ok) {
+                let totalFNO = 0;
+                let totalRELPREV = 0;
+                const tiposContagem = {};
+                const dadosMensais = {};
 
-                    throw new Error(
-                        "Não foi possível acessar a planilha."
-                    );
+                for (let i = 1; i < linhas.length; i++) {
+                    const linha = linhas[i];
+                    const origemRaw = idxOrigem !== -1 ? linha[idxOrigem] : "";
+                    const origem = identificarOrigem(origemRaw);
 
-                }
+                    if (origem === "FNO") totalFNO++;
+                    else if (origem === "RELPREV") totalRELPREV++;
 
-
-                const texto =
-                    await resposta.text();
-
-
-                const linhas =
-                    interpretarCSV(texto);
-
-
-                if (
-                    !linhas ||
-                    linhas.length < 2
-                ) {
-
-                    throw new Error(
-                        "A planilha não possui dados suficientes."
-                    );
-
-                }
-
-
-                /* =================================================
-                   CABEÇALHO
-                ================================================= */
-
-                const cabecalho =
-                    linhas[0];
-
-
-                /*
-                 * Procuramos as colunas pelo nome.
-                 * Isso evita problemas caso a ordem das colunas
-                 * seja alterada na Google Sheets.
-                 */
-
-                const colunaOrigem =
-                    localizarColuna(
-                        cabecalho,
-                        [
-                            "ORIGEM"
-                        ]
-                    );
-
-
-                const colunaTipoOcorrencia =
-                    localizarColuna(
-                        cabecalho,
-                        [
-                            "TIPO DE OCORRÊNCIA",
-                            "TIPO DE OCORRENCIA"
-                        ]
-                    );
-
-
-                const colunaDataOcorrencia =
-                    localizarColuna(
-                        cabecalho,
-                        [
-                            "DATA DA OCORRÊNCIA",
-                            "DATA DA OCORRENCIA"
-                        ]
-                    );
-
-
-                if (colunaOrigem === -1) {
-
-                    throw new Error(
-                        "A coluna ORIGEM não foi encontrada."
-                    );
-
-                }
-
-
-                if (colunaTipoOcorrencia === -1) {
-
-                    throw new Error(
-                        "A coluna TIPO DE OCORRÊNCIA não foi encontrada."
-                    );
-
-                }
-
-
-                if (colunaDataOcorrencia === -1) {
-
-                    throw new Error(
-                        "A coluna DATA DA OCORRÊNCIA não foi encontrada."
-                    );
-
-                }
-
-
-                console.log(
-                    "Colunas encontradas:",
-                    {
-                        origem: colunaOrigem,
-                        tipoOcorrencia:
-                            colunaTipoOcorrencia,
-                        dataOcorrencia:
-                            colunaDataOcorrencia
-                    }
-                );
-
-
-                /* =================================================
-                   PREPARAR DADOS
-                ================================================= */
-
-                const dados =
-                    linhas
-                        .slice(1)
-                        .filter(
-                            linha =>
-                                linha.some(
-                                    valor =>
-                                        String(valor || "")
-                                            .trim() !== ""
-                                )
-                        );
-
-
-                const fno = [];
-                const relprev = [];
-
-
-                const frequenciasTipos = {};
-
-
-                const meses = {};
-
-
-                /* =================================================
-                   PROCESSAMENTO
-                ================================================= */
-
-                dados.forEach(linha => {
-
-                    const origem =
-                        identificarOrigem(
-                            linha[colunaOrigem]
-                        );
-
-
-                    const tipo =
-                        String(
-                            linha[
-                                colunaTipoOcorrencia
-                            ] || ""
-                        ).trim();
-
-
-                    const data =
-                        interpretarData(
-                            linha[
-                                colunaDataOcorrencia
-                            ]
-                        );
-
-
-                    /*
-                     * Se a origem for FNO ou RELPREV,
-                     * contabilizamos.
-                     */
-
-                    if (origem === "FNO") {
-                        fno.push(linha);
+                    const tipoOcorrencia = idxTipoOcorrencia !== -1 && linha[idxTipoOcorrencia] ? linha[idxTipoOcorrencia].trim() : "NÃO INFORMADO";
+                    if (tipoOcorrencia) {
+                        tiposContagem[tipoOcorrencia] = (tiposContagem[tipoOcorrencia] || 0) + 1;
                     }
 
-
-                    if (origem === "RELPREV") {
-                        relprev.push(linha);
-                    }
-
-
-                    /*
-                     * Ranking geral de TIPO DE OCORRÊNCIA
-                     */
-
-                    if (tipo) {
-
-                        frequenciasTipos[tipo] =
-                            (
-                                frequenciasTipos[tipo] ||
-                                0
-                            ) + 1;
-
-                    }
-
-
-                    /*
-                     * Análise mensal
-                     */
-
-                    if (data) {
-
-                        const chave =
-                            chaveMes(data);
-
-
-                        if (!meses[chave]) {
-
-                            meses[chave] = {
-
-                                chave: chave,
-
-                                nome:
-                                    nomeMes(data),
-
-                                ordem:
-                                    data.getFullYear() *
-                                    100 +
-                                    data.getMonth(),
-
-                                fno: 0,
-
-                                relprev: 0,
-
-                                total: 0,
-
-                                tipos: {}
-
-                            };
-
+                    const dataObj = idxData !== -1 ? interpretarData(linha[idxData]) : null;
+                    if (dataObj) {
+                        const mesKey = chaveMes(dataObj);
+                        if (!dadosMensais[mesKey]) {
+                            dadosMensais[mesKey] = { data: dataObj, fno: 0, relprev: 0, tipos: {} };
                         }
-
-
-                        const mes =
-                            meses[chave];
-
-
-                        mes.total++;
-
-
-                        if (origem === "FNO") {
-                            mes.fno++;
-                        }
-
-
-                        if (origem === "RELPREV") {
-                            mes.relprev++;
-                        }
-
-
-                        if (tipo) {
-
-                            mes.tipos[tipo] =
-                                (
-                                    mes.tipos[tipo] ||
-                                    0
-                                ) + 1;
-
-                        }
-
+                        if (origem === "FNO") dadosMensais[mesKey].fno++;
+                        if (origem === "RELPREV") dadosMensais[mesKey].relprev++;
+                        dadosMensais[mesKey].tipos[tipoOcorrencia] = (dadosMensais[mesKey].tipos[tipoOcorrencia] || 0) + 1;
                     }
+                }
 
+                // Atualizar Cards
+                const totalGeral = totalFNO + totalRELPREV;
+                document.getElementById("total-fno").innerText = totalFNO;
+                document.getElementById("total-relprev").innerText = totalRELPREV;
+                document.getElementById("total-geral").innerText = totalGeral;
+
+                const pctFNO = totalGeral > 0 ? ((totalFNO / totalGeral) * 100).toFixed(1) : 0;
+                const pctRELPREV = totalGeral > 0 ? ((totalRELPREV / totalGeral) * 100).toFixed(1) : 0;
+                document.getElementById("valor-visivel-fno").innerText = `${totalFNO} (${pctFNO}%)`;
+                document.getElementById("valor-visivel-relprev").innerText = `${totalRELPREV} (${pctRELPREV}%)`;
+
+                // Tipo Predominante Geral
+                let tipoMaisFreq = "—";
+                let maxQtd = 0;
+                Object.entries(tiposContagem).forEach(([tipo, count]) => {
+                    if (count > maxQtd) {
+                        maxQtd = count;
+                        tipoMaisFreq = tipo;
+                    }
+                });
+                document.getElementById("tipo-predominante").innerText = tipoMaisFreq;
+                document.getElementById("quantidade-tipo").innerText = maxQtd > 0 ? `${maxQtd} ocorrências registradas` : "—";
+
+                // Atualizar Gráfico Proporção
+                if (graficoProporcao) {
+                    graficoProporcao.data.datasets[0].data = [totalFNO, totalRELPREV];
+                    graficoProporcao.update();
+                }
+
+                // Processar Dados Mensais
+                const mesesOrdenados = Object.keys(dadosMensais).sort();
+                const labelsMensais = [];
+                const arrFNO = [];
+                const arrRELPREV = [];
+                const tabelaBody = document.getElementById("tabela-mensal");
+                tabelaBody.innerHTML = "";
+
+                mesesOrdenados.forEach(mesKey => {
+                    const item = dadosMensais[mesKey];
+                    const labelMes = nomeMes(item.data);
+                    labelsMensais.push(labelMes);
+                    arrFNO.push(item.fno);
+                    arrRELPREV.push(item.relprev);
+
+                    let topTipoMes = "—";
+                    let topQtdMes = 0;
+                    Object.entries(item.tipos).forEach(([t, q]) => {
+                        if (q > topQtdMes) {
+                            topQtdMes = q;
+                            topTipoMes = t;
+                        }
+                    });
+
+                    const totalMes = item.fno + item.relprev;
+                    const tr = document.createElement("tr");
+                    tr.className = "table-row border-b border-slate-800/50 text-slate-300";
+                    tr.innerHTML = `
+                        <td class="px-4 py-3 text-left font-medium text-white">${labelMes}</td>
+                        <td class="px-4 py-3 text-center text-blue-400 font-semibold">${item.fno}</td>
+                        <td class="px-4 py-3 text-center text-amber-400 font-semibold">${item.relprev}</td>
+                        <td class="px-4 py-3 text-center font-bold text-white">${totalMes}</td>
+                        <td class="px-4 py-3 text-left truncate max-w-xs" title="${topTipoMes}">${topTipoMes}</td>
+                        <td class="px-4 py-3 text-center text-purple-400 font-semibold">${topQtdMes}</td>
+                    `;
+                    tabelaBody.appendChild(tr);
                 });
 
-
-                /* =================================================
-                   TOTAIS
-                ================================================= */
-
-                const totalFno =
-                    fno.length;
-
-
-                const totalRelprev =
-                    relprev.length;
-
-
-                const totalGeral =
-                    totalFno +
-                    totalRelprev;
-
-
-                /* =================================================
-                   TIPO PREDOMINANTE GERAL
-                ================================================= */
-
-                const ranking =
-                    Object.entries(
-                        frequenciasTipos
-                    )
-                    .sort(
-                        (a, b) =>
-                            b[1] - a[1]
-                    );
-
-
-                let tipoPredominante =
-                    "—";
-
-
-                let quantidadePredominante =
-                    0;
-
-
-                if (ranking.length) {
-
-                    tipoPredominante =
-                        ranking[0][0];
-
-                    quantidadePredominante =
-                        ranking[0][1];
-
-                }
-
-
-                /* =================================================
-                   ATUALIZAR KPIs
-                ================================================= */
-
-                document.getElementById(
-                    "total-fno"
-                ).textContent =
-                    totalFno;
-
-
-                document.getElementById(
-                    "total-relprev"
-                ).textContent =
-                    totalRelprev;
-
-
-                document.getElementById(
-                    "total-geral"
-                ).textContent =
-                    totalGeral;
-
-
-                document.getElementById(
-                    "tipo-predominante"
-                ).textContent =
-                    tipoPredominante;
-
-
-                document.getElementById(
-                    "quantidade-tipo"
-                ).textContent =
-                    quantidadePredominante +
-                    " ocorrência(s)";
-
-
-                /* =================================================
-                   PERCENTUAIS
-                ================================================= */
-
-                const pctFno =
-                    totalGeral > 0
-                        ? (
-                            totalFno /
-                            totalGeral *
-                            100
-                        ).toFixed(1)
-                        : "0.0";
-
-
-                const pctRelprev =
-                    totalGeral > 0
-                        ? (
-                            totalRelprev /
-                            totalGeral *
-                            100
-                        ).toFixed(1)
-                        : "0.0";
-
-
-                document.getElementById(
-                    "valor-visivel-fno"
-                ).textContent =
-                    `${totalFno} (${pctFno}%)`;
-
-
-                document.getElementById(
-                    "valor-visivel-relprev"
-                ).textContent =
-                    `${totalRelprev} (${pctRelprev}%)`;
-
-
-                /* =================================================
-                   ATUALIZAR GRÁFICO FNO X RELPREV
-                ================================================= */
-
-                if (graficoProporcao) {
-
-                    graficoProporcao
-                        .data
-                        .datasets[0]
-                        .data =
-                        [
-                            totalFno,
-                            totalRelprev
-                        ];
-
-
-                    graficoProporcao.update();
-
-                }
-
-
-                /* =================================================
-                   ATUALIZAR GRÁFICO MENSAL
-                ================================================= */
-
-                const listaMeses =
-                    Object.values(meses)
-                        .sort(
-                            (a, b) =>
-                                a.ordem -
-                                b.ordem
-                        );
-
-
                 if (graficoMensal) {
-
-                    graficoMensal.data.labels =
-                        listaMeses.map(
-                            mes => mes.nome
-                        );
-
-
-                    graficoMensal
-                        .data
-                        .datasets[0]
-                        .data =
-                        listaMeses.map(
-                            mes => mes.fno
-                        );
-
-
-                    graficoMensal
-                        .data
-                        .datasets[1]
-                        .data =
-                        listaMeses.map(
-                            mes => mes.relprev
-                        );
-
-
+                    graficoMensal.data.labels = labelsMensais;
+                    graficoMensal.data.datasets[0].data = arrFNO;
+                    graficoMensal.data.datasets[1].data = arrRELPREV;
                     graficoMensal.update();
-
                 }
 
+                // Atualizar Ranking
+                const rankingContainer = document.getElementById("ranking-tipos");
+                rankingContainer.innerHTML = "";
+                const rankingOrdenado = Object.entries(tiposContagem).sort((a, b) => b[1] - a[1]);
 
-                /* =================================================
-                   TABELA
-                ================================================= */
+                rankingOrdenado.slice(0, 9).forEach(([tipo, count], idx) => {
+                    const card = document.createElement("div");
+                    card.className = "bg-slate-950/40 border border-slate-800/80 p-3 rounded-xl flex items-center justify-between";
+                    card.innerHTML = `
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold">${idx + 1}</span>
+                            <span class="text-sm font-medium text-slate-200 truncate" title="${tipo}">${tipo}</span>
+                        </div>
+                        <span class="text-xs font-extrabold px-2 py-1 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20">${count}</span>
+                    `;
+                    rankingContainer.appendChild(card);
+                });
 
-                atualizarTabelaMensal(
-                    meses
-                );
+                const agora = new Date();
+                document.getElementById("atualizacao").innerText = "Atualizado às " + agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 
-
-                /* =================================================
-                   RANKING
-                ================================================= */
-
-                atualizarRankingTipos(
-                    frequenciasTipos
-                );
-
-
-                /* =================================================
-                   STATUS
-                ================================================= */
-
-                const horario =
-                    new Date()
-                        .toLocaleTimeString(
-                            "pt-BR",
-                            {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                second: "2-digit"
-                            }
-                        );
-
-
-                atualizacao.textContent =
-                    `Sincronizado às ${horario}`;
-
-
-                statusDot.className =
-                    "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
-
-
-                console.log(
-                    "Dados atualizados com sucesso.",
-                    {
-                        totalFno,
-                        totalRelprev,
-                        totalGeral,
-                        tipoPredominante
-                    }
-                );
-
+            } catch (erro) {
+                console.error("Erro ao carregar CSV:", erro);
+                document.getElementById("atualizacao").innerText = "Erro ao carregar dados";
+            } finally {
+                if (icone) icone.classList.remove("fa-spin");
             }
-
-            catch (erro) {
-
-                console.error(
-                    "Erro ao carregar os dados:",
-                    erro
-                );
-
-
-                atualizacao.textContent =
-                    "Erro ao atualizar os dados";
-
-
-                statusDot.className =
-                    "w-2 h-2 rounded-full bg-red-500";
-
-
-                /*
-                 * Mensagem visível para facilitar
-                 * diagnóstico no GitHub Pages.
-                 */
-
-                document.getElementById(
-                    "tabela-mensal"
-                ).innerHTML = `
-
-                    <tr>
-
-                        <td
-                            colspan="6"
-                            class="text-center py-8 text-red-400">
-
-                            <i class="fa-solid fa-triangle-exclamation mr-2"></i>
-
-                            Não foi possível carregar os dados da planilha.
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
-
-            finally {
-
-                icone.classList.remove(
-                    "fa-spin"
-                );
-
-            }
-
         }
 
+        // Inicializar aplicação
+        window.addEventListener("DOMContentLoaded", () => {
+            inicializarGraficoProporcao();
+            inicializarGraficoMensal();
+            carregarDados();
 
-        /* =======================================================
-           INICIALIZAÇÃO
-        ======================================================= */
-
-        window.addEventListener(
-            "DOMContentLoaded",
-            function() {
-
-                Chart.register(
-                    ChartDataLabels
-                );
-
-
-                inicializarGraficoProporcao();
-
-
-                inicializarGraficoMensal();
-
-
-                carregarDados();
-
-
-                /*
-                 * Atualização manual
-                 */
-
-                document
-                    .getElementById("atualizar")
-                    .addEventListener(
-                        "click",
-                        carregarDados
-                    );
-
-
-                /*
-                 * Atualização automática:
-                 * 5 minutos
-                 */
-
-                setInterval(
-                    carregarDados,
-                    5 * 60 * 1000
-                );
-
-            }
-        );
-
+            // Auto-atualização a cada 5 minutos
+            setInterval(carregarDados, 5 * 60 * 1000);
+        });
     </script>
-
 </body>
-
 </html>
-```
