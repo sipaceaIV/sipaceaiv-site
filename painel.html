@@ -366,13 +366,13 @@
                 </table>
             </div>
             <div>
-                <h4 style="font-size:14px; margin-bottom:8px; color:#1a2b4c;">🧩 Tipos mais frequentes</h4>
+                <h4 style="font-size:14px; margin-bottom:8px; color:#1a2b4c;">Tipos mais frequentes</h4>
                 <div class="chart-container">
                     <canvas id="chartTiposOcorrencias"></canvas>
                 </div>
             </div>
             <div>
-                <h4 style="font-size:14px; margin-bottom:8px; color:#1a2b4c;">📈 Top 5 tipos por mês</h4>
+                <h4 style="font-size:14px; margin-bottom:8px; color:#1a2b4c;">Top 5 tipos por mês</h4>
                 <div class="chart-container tall">
                     <canvas id="chartTopTiposMensal"></canvas>
                 </div>
@@ -416,17 +416,6 @@
                             <!-- preenchido via JS -->
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Comparativo SIGCEA -->
-                <div>
-                    <h4 style="font-size:14px; margin-bottom:8px; color:#1a2b4c;">📊 Comparativo · 2026 vs Média 2023-2025</h4>
-                    <div class="comparativo-sigcea" id="comparativoSIGCEA">
-                        <!-- preenchido via JS -->
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="footer">
@@ -823,15 +812,6 @@
         ra: [0, 0, 1, 0, 0, 0, 0, 0],              // RA (estimado)
         fatores: [0, 0, 0, 0, 0, 0, 0, 0],         // Fatores Contribuintes
         ocorrenciasATS: [2, 2, 0, 1, 0, 2, 1, 0]   // Total de ocorrências
-    };
-
-    // Média dos últimos 3 anos (2023-2025) por categoria
-    const media3AnosMovimento = {
-        incidente: (7 + 6 + 14) / 3,  // média dos totais anuais
-        ricea: 0.33,   // estimado
-        ra: 0.33,      // estimado
-        fatores: 0,    // estimado
-        ocorrenciasATS: (7 + 7 + 14) / 3
     };
 
     // ================================================================
