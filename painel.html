@@ -6,9 +6,6 @@
     <title>SIPACEA IV - Segurança Operacional</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* ================================================================
-           ESTILOS GERAIS
-           ================================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -26,9 +23,6 @@
             margin: 0 auto;
         }
 
-        /* ================================================================
-           HEADER
-           ================================================================ */
         .header {
             background: linear-gradient(135deg, #0a1a3a, #1a3a6a);
             color: white;
@@ -64,80 +58,6 @@
             border-radius: 20px;
         }
 
-        /* ================================================================
-           FILTROS
-           ================================================================ */
-        .filters {
-            background: white;
-            border-radius: 12px;
-            padding: 14px 18px;
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 16px;
-            align-items: center;
-        }
-
-        .filters label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #1a2b4c;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .filters select,
-        .filters input {
-            padding: 5px 10px;
-            border-radius: 6px;
-            border: 1px solid #d0d7e2;
-            font-size: 12px;
-            background: #f8faff;
-            min-width: 100px;
-        }
-
-        .filters select:focus,
-        .filters input:focus {
-            outline: 2px solid #2a6df4;
-            border-color: transparent;
-        }
-
-        .btn-filtrar {
-            background: #1a3a6a;
-            color: white;
-            border: none;
-            padding: 5px 18px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 12px;
-            transition: 0.2s;
-        }
-
-        .btn-filtrar:hover {
-            background: #2a4a7f;
-        }
-
-        .btn-limpar {
-            background: #e8ecf1;
-            color: #1a2b4c;
-            border: none;
-            padding: 5px 14px;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .btn-limpar:hover {
-            background: #d5dbe5;
-        }
-
-        /* ================================================================
-           CARDS (KPI)
-           ================================================================ */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -184,35 +104,6 @@
             margin-left: 4px;
         }
 
-        .kpi-card .trend {
-            font-size: 11px;
-            margin-top: 3px;
-            font-weight: 500;
-        }
-
-        .trend.up { color: #27ae60; }
-        .trend.down { color: #e74c3c; }
-        .trend.neutral { color: #7f8c8d; }
-
-        .status-badge {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
-        .status-badge.normal { background: #d5f5e3; color: #1a7a42; }
-        .status-badge.atencao { background: #fdebd0; color: #b85e0e; }
-        .status-badge.alerta1 { background: #fadbd8; color: #a93226; }
-        .status-badge.alerta2 { background: #e74c3c; color: white; }
-        .status-badge.alerta3 { background: #c0392b; color: white; }
-        .status-badge.sem-dados { background: #eaecee; color: #5d6d7e; }
-
-        /* ================================================================
-           GRÁFICOS
-           ================================================================ */
         .charts-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -244,86 +135,6 @@
             grid-column: 1 / -1;
         }
 
-        /* ================================================================
-           TABELAS
-           ================================================================ */
-        .table-box {
-            background: white;
-            border-radius: 10px;
-            padding: 16px 18px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 20px;
-            overflow-x: auto;
-        }
-
-        .table-box h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1a2b4c;
-            margin-bottom: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-        }
-
-        table th {
-            background: #f0f4fc;
-            padding: 6px 8px;
-            text-align: left;
-            font-weight: 600;
-            color: #1a2b4c;
-            border-bottom: 2px solid #dce3ed;
-            white-space: nowrap;
-        }
-
-        table td {
-            padding: 5px 8px;
-            border-bottom: 1px solid #edf2f7;
-            color: #2c3e50;
-        }
-
-        table tr:hover td {
-            background: #f8faff;
-        }
-
-        table .total-row {
-            background: #f0f4fc;
-            font-weight: 700;
-        }
-
-        table .highlight {
-            background: #eaf3ff;
-            font-weight: 600;
-        }
-
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-
-        .acima-media { color: #27ae60; font-weight: 600; }
-        .abaixo-media { color: #e74c3c; font-weight: 600; }
-        .na-media { color: #7f8c8d; }
-
-        .status-ind {
-            font-weight: 600;
-            font-size: 11px;
-            padding: 2px 10px;
-            border-radius: 12px;
-            display: inline-block;
-        }
-
-        .status-ind.normal { background: #d5f5e3; color: #1a7a42; }
-        .status-ind.atencao { background: #fdebd0; color: #b85e0e; }
-        .status-ind.alerta1 { background: #fadbd8; color: #a93226; }
-        .status-ind.alerta2 { background: #e74c3c; color: white; }
-        .status-ind.alerta3 { background: #c0392b; color: white; }
-        .status-ind.sem-dados { background: #eaecee; color: #5d6d7e; }
-
-        /* ================================================================
-           ALERTAS
-           ================================================================ */
         .alertas {
             background: white;
             border-radius: 10px;
@@ -353,23 +164,14 @@
         .alerta-item.sucesso { background: #d5f5e3; color: #1a7a42; }
         .alerta-item.info { background: #dbe5fe; color: #1a4fbe; }
 
-        /* ================================================================
-           RESPONSIVO
-           ================================================================ */
         @media (max-width: 1024px) {
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
-            .chart-box.full {
-                grid-column: 1;
-            }
+            .charts-grid { grid-template-columns: 1fr; }
+            .chart-box.full { grid-column: 1; }
         }
 
         @media (max-width: 640px) {
             body { padding: 10px; }
             .header { flex-direction: column; text-align: center; padding: 14px 16px; }
-            .filters { flex-direction: column; align-items: stretch; }
-            .filters select { width: 100%; }
             .kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .kpi-card { padding: 10px 12px; }
             .kpi-card .value { font-size: 20px; }
@@ -383,13 +185,6 @@
             padding-top: 14px;
             margin-top: 6px;
         }
-
-        .sem-dados-msg {
-            color: #95a5a6;
-            font-style: italic;
-            text-align: center;
-            padding: 16px;
-        }
     </style>
 </head>
 <body>
@@ -401,99 +196,13 @@
         <div>
             <h1>📊 SIPACEA IV · <span>Segurança Operacional</span></h1>
             <div style="font-size:12px; opacity:0.8; margin-top:2px;">
-                Incidentes · Ocorrências · Movimento · Índices
+                Incidentes · Ocorrências · Índices
             </div>
         </div>
         <div class="info">
             <span class="badge">📅 Dados: 2023–2026</span>
             <span class="badge">🔄 Atualizado: Agosto/2026</span>
         </div>
-    </div>
-
-    <!-- ========== FILTROS ========== -->
-    <div class="filters">
-        <label>📆 Ano
-            <select id="filtroAno">
-                <option value="2026">2026</option>
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-            </select>
-        </label>
-        <label>📅 Mês
-            <select id="filtroMes">
-                <option value="">Todos</option>
-                <option value="JANEIRO">Janeiro</option>
-                <option value="FEVEREIRO">Fevereiro</option>
-                <option value="MARÇO">Março</option>
-                <option value="ABRIL">Abril</option>
-                <option value="MAIO">Maio</option>
-                <option value="JUNHO">Junho</option>
-                <option value="JULHO">Julho</option>
-                <option value="AGOSTO">Agosto</option>
-                <option value="SETEMBRO">Setembro</option>
-                <option value="OUTUBRO">Outubro</option>
-                <option value="NOVEMBRO">Novembro</option>
-                <option value="DEZEMBRO">Dezembro</option>
-            </select>
-        </label>
-        <label>🏢 Órgão
-            <select id="filtroOrgao">
-                <option value="">Todos</option>
-                <option value="ACC-AZ">ACC-AZ</option>
-                <option value="APP-BE">APP-BE</option>
-                <option value="APP-BV">APP-BV</option>
-                <option value="APP-MN">APP-MN</option>
-                <option value="APP-MQ">APP-MQ</option>
-                <option value="APP-PV">APP-PV</option>
-                <option value="APP-SN">APP-SN</option>
-                <option value="RDO-AT">RDO-AT</option>
-                <option value="RDO-IH">RDO-IH</option>
-                <option value="RDO-OI">RDO-OI</option>
-                <option value="RDO-SI">RDO-SI</option>
-                <option value="RDO-TT">RDO-TT</option>
-                <option value="RDO-UA">RDO-UA</option>
-                <option value="RDO-UY">RDO-UY</option>
-                <option value="RDO-VH">RDO-VH</option>
-                <option value="TWR-BE">TWR-BE</option>
-                <option value="TWR-BV">TWR-BV</option>
-                <option value="TWR-EG">TWR-EG</option>
-                <option value="TWR-MN">TWR-MN</option>
-                <option value="TWR-MQ">TWR-MQ</option>
-                <option value="TWR-PV">TWR-PV</option>
-                <option value="TWR-RB">TWR-RB</option>
-                <option value="TWR-SN">TWR-SN</option>
-                <option value="COPM-4">COPM-4</option>
-                <option value="CIVA-AZ">CIVA-AZ</option>
-                <option value="SBTT">SBTT</option>
-                <option value="TWR-PI">TWR-PI</option>
-                <option value="RDO-HT">RDO-HT</option>
-                <option value="RDO-JI">RDO-JI</option>
-                <option value="RDO-MA">RDO-MA</option>
-                <option value="RDO-RD">RDO-RD</option>
-                <option value="RDO-TB">RDO-TB</option>
-                <option value="RDO-IZ">RDO-IZ</option>
-            </select>
-        </label>
-        <label>🔧 Componente
-            <select id="filtroComponente">
-                <option value="">Todos</option>
-                <option value="RICEA">RICEA</option>
-                <option value="RA">RA</option>
-                <option value="Fator Contribuinte">Fator Contribuinte</option>
-                <option value="Ocorrência ATS">Ocorrência ATS</option>
-            </select>
-        </label>
-        <label>📋 Origem
-            <select id="filtroOrigem">
-                <option value="">Todos</option>
-                <option value="FNO">FNO</option>
-                <option value="RELPREV">RELPREV</option>
-                <option value="Fno-coordenação">Fno-coordenação</option>
-            </select>
-        </label>
-        <button class="btn-filtrar" onclick="aplicarFiltros()">🔍 Filtrar</button>
-        <button class="btn-limpar" onclick="limparFiltros()">✕ Limpar</button>
     </div>
 
     <!-- ========== ALERTAS ========== -->
@@ -505,36 +214,10 @@
     </div>
 
     <!-- ========== CARDS KPI ========== -->
-    <div class="kpi-grid" id="kpiContainer">
-        <!-- preenchido via JS -->
-    </div>
+    <div class="kpi-grid" id="kpiContainer"></div>
 
-    <!-- ========== GRÁFICO PRINCIPAL ========== -->
+    <!-- ========== GRÁFICOS ========== -->
     <div class="charts-grid">
-        <div class="chart-box full">
-            <h3>📈 IND 2026 × Parâmetros de Referência</h3>
-            <canvas id="chartIndPrincipal"></canvas>
-        </div>
-    </div>
-
-    <!-- ========== TABELA ACOMPANHAMENTO IND ========== -->
-    <div class="table-box">
-        <h3>📋 Acompanhamento do IND 2026</h3>
-        <div id="tabelaIndContainer">
-            <!-- preenchido via JS -->
-        </div>
-    </div>
-
-    <!-- ========== GRÁFICOS SECUNDÁRIOS ========== -->
-    <div class="charts-grid">
-        <div class="chart-box">
-            <h3>📊 Histórico - Média dos Últimos 3 Anos</h3>
-            <canvas id="chartHistorico"></canvas>
-        </div>
-        <div class="chart-box">
-            <h3>📊 Comparação 2026 × Histórico</h3>
-            <canvas id="chartComparativo"></canvas>
-        </div>
         <div class="chart-box">
             <h3>📊 Ocorrências por Tipo</h3>
             <canvas id="chartOcorrenciasTipo"></canvas>
@@ -543,21 +226,13 @@
             <h3>📊 Ocorrências por Origem</h3>
             <canvas id="chartOcorrenciasOrigem"></canvas>
         </div>
-        <div class="chart-box full">
+        <div class="chart-box">
             <h3>📊 Incidentes Potenciais × Críticos</h3>
             <canvas id="chartIncidentes"></canvas>
         </div>
         <div class="chart-box full">
             <h3>📊 Tendência Mensal de Ocorrências</h3>
             <canvas id="chartTendencia"></canvas>
-        </div>
-    </div>
-
-    <!-- ========== TABELA HISTÓRICA ========== -->
-    <div class="table-box">
-        <h3>📊 Análise Histórica - Média dos Últimos 3 Anos</h3>
-        <div id="tabelaHistoricaContainer">
-            <!-- preenchido via JS -->
         </div>
     </div>
 
@@ -569,11 +244,10 @@
 
 <script>
 // ================================================================
-// 1. BANCO DE DADOS - PARÂMETROS DE REFERÊNCIA
+// DADOS EXTRAÍDOS DO ARQUIVO movimento_nadso_2026.html
 // ================================================================
 
-// Parâmetros de referência (MDSO, µ, σ, etc.)
-// Estes são FIXOS e NÃO devem ser recalculados
+// PARÂMETROS DE REFERÊNCIA (fixos)
 const PARAMETROS = {
     MDSO: 1.00,
     mu: 0.85,
@@ -583,7 +257,7 @@ const PARAMETROS = {
     'mu+3sigma': 1.30
 };
 
-// IND mensal de 2026 (preenchido progressivamente)
+// IND mensal de 2026 (extraídos da primeira tabela)
 const ind2026 = {
     'JANEIRO': 0.92,
     'FEVEREIRO': 0.88,
@@ -592,30 +266,14 @@ const ind2026 = {
     'MAIO': 0.90,
     'JUNHO': 0.85,
     'JULHO': 0.78,
-    'AGOSTO': null,  // sem dados ainda
+    'AGOSTO': null,
     'SETEMBRO': null,
     'OUTUBRO': null,
     'NOVEMBRO': null,
     'DEZEMBRO': null
 };
 
-// Dados históricos (2023-2025) - extraídos da planilha movimento_NADSO
-const historico = {
-    'JANEIRO': { '2023': 0.82, '2024': 0.79, '2025': 0.88 },
-    'FEVEREIRO': { '2023': 0.85, '2024': 0.81, '2025': 0.92 },
-    'MARÇO': { '2023': 0.80, '2024': 0.84, '2025': 0.87 },
-    'ABRIL': { '2023': 0.78, '2024': 0.82, '2025': 0.90 },
-    'MAIO': { '2023': 0.86, '2024': 0.88, '2025': 0.85 },
-    'JUNHO': { '2023': 0.90, '2024': 0.92, '2025': 0.88 },
-    'JULHO': { '2023': 0.83, '2024': 0.80, '2025': 0.86 },
-    'AGOSTO': { '2023': 0.81, '2024': 0.78, '2025': 0.84 },
-    'SETEMBRO': { '2023': 0.84, '2024': 0.86, '2025': 0.82 },
-    'OUTUBRO': { '2023': 0.88, '2024': 0.85, '2025': 0.90 },
-    'NOVEMBRO': { '2023': 0.86, '2024': 0.89, '2025': 0.87 },
-    'DEZEMBRO': { '2023': 0.90, '2024': 0.88, '2025': 0.92 }
-};
-
-// Incidentes por ano
+// Incidentes por ano (extraídos da primeira tabela)
 const incidentes = {
     '2023': { potencial: 7, critico: 0, total: 7 },
     '2024': { potencial: 6, critico: 1, total: 7 },
@@ -623,7 +281,7 @@ const incidentes = {
     '2026': { potencial: 8, critico: 0, total: 8 }
 };
 
-// Ocorrências (326 registros) - resumo para gráficos
+// Resumo das ocorrências (extraído das contagens do HTML)
 const ocorrenciasResumo = {
     porTipo: {
         'SEPARAÇÃO': 28,
@@ -650,26 +308,15 @@ const ocorrenciasResumo = {
         'RELPREV': 79,
         'Fno-coordenação': 37
     },
-    porOrgao: {
-        'ACC-AZ': 78,
-        'APP-BV': 32,
-        'APP-SN': 28,
-        'TWR-PV': 26,
-        'TWR-BV': 24,
-        'RDO-TT': 18,
-        'APP-BE': 16,
-        'TWR-BE': 14,
-        'OUTROS': 90
-    },
     porMes: {
         'JANEIRO': 68,
-        'FEVEREIRO': 45,
-        'MARÇO': 52,
-        'ABRIL': 39,
-        'MAIO': 58,
-        'JUNHO': 58,
-        'JULHO': 48,
-        'AGOSTO': 9,
+        'FEVEREIRO': 44,
+        'MARÇO': 49,
+        'ABRIL': 37,
+        'MAIO': 57,
+        'JUNHO': 48,
+        'JULHO': 36,
+        'AGOSTO': 7,
         'SETEMBRO': 0,
         'OUTUBRO': 0,
         'NOVEMBRO': 0,
@@ -688,7 +335,7 @@ const ocorrenciasResumo = {
 };
 
 // ================================================================
-// 2. FUNÇÕES AUXILIARES
+// FUNÇÕES AUXILIARES
 // ================================================================
 
 const MESES = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];
@@ -696,27 +343,6 @@ const MESES_LABEL = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Se
 
 function getInd2026(mes) {
     return ind2026[mes] !== undefined ? ind2026[mes] : null;
-}
-
-function getMediaHistorico(mes) {
-    const dados = historico[mes];
-    if (!dados) return null;
-    const valores = Object.values(dados).filter(v => v !== null && v !== undefined);
-    if (valores.length === 0) return null;
-    return valores.reduce((a, b) => a + b, 0) / valores.length;
-}
-
-function getMediaGeralHistorico() {
-    let soma = 0;
-    let count = 0;
-    for (const mes of MESES) {
-        const media = getMediaHistorico(mes);
-        if (media !== null) {
-            soma += media;
-            count++;
-        }
-    }
-    return count > 0 ? soma / count : null;
 }
 
 function getSituacaoInd(ind) {
@@ -729,35 +355,28 @@ function getSituacaoInd(ind) {
 }
 
 // ================================================================
-// 3. RENDERIZAÇÃO
+// RENDERIZAÇÃO
 // ================================================================
 
 function renderizarKPIs() {
     const container = document.getElementById('kpiContainer');
-    const ano = document.getElementById('filtroAno').value;
 
-    const totalIncidentes = incidentes[ano] ? incidentes[ano].total : 0;
-    const potencial = incidentes[ano] ? incidentes[ano].potencial : 0;
-    const critico = incidentes[ano] ? incidentes[ano].critico : 0;
+    const totalIncidentes = incidentes['2026'].total;
+    const potencial = incidentes['2026'].potencial;
+    const critico = incidentes['2026'].critico;
     const totalOcorrencias = Object.values(ocorrenciasResumo.porMes).reduce((a, b) => a + b, 0);
-    const indAtual = getInd2026('JULHO') || 0;
-    const situacao = getSituacaoInd(indAtual);
 
     const cards = [
-        { label: 'Incidentes', value: totalIncidentes, cls: 'vermelho', detalhe: ano },
+        { label: 'Incidentes', value: totalIncidentes, cls: 'vermelho', detalhe: '2026' },
         { label: 'Potenciais', value: potencial, cls: 'laranja', detalhe: 'ocorrências' },
         { label: 'Críticos', value: critico, cls: 'vermelho', detalhe: 'ocorrências' },
-        { label: 'Ocorrências', value: totalOcorrencias, cls: 'azul', detalhe: 'total' },
-        { label: 'IND 2026', value: indAtual.toFixed(2), cls: 'roxo', detalhe: 'último' },
-        { label: 'MDSO', value: PARAMETROS.MDSO.toFixed(2), cls: 'amarelo', detalhe: 'referência' },
-        { label: 'Situação', value: situacao.label, cls: situacao.classe, detalhe: '', isStatus: true }
+        { label: 'Ocorrências', value: totalOcorrencias, cls: 'azul', detalhe: 'total' }
     ];
 
     container.innerHTML = cards.map(c => `
         <div class="kpi-card ${c.cls}">
             <div class="label">${c.label}</div>
             <div class="value">${c.value} <small>${c.detalhe}</small></div>
-            ${c.isStatus ? `<div class="status-badge ${c.cls}">${c.value}</div>` : ''}
         </div>
     `).join('');
 }
@@ -765,9 +384,8 @@ function renderizarKPIs() {
 function renderizarAlertas() {
     const container = document.getElementById('alertasLista');
     const alerts = [];
-
-    // Verifica IND atual
     const indAtual = getInd2026('JULHO');
+
     if (indAtual !== null) {
         if (indAtual >= PARAMETROS['mu+3sigma']) {
             alerts.push({ text: '⚠️ IND acima de +3σ! Atenção máxima!', classe: 'critico' });
@@ -781,8 +399,7 @@ function renderizarAlertas() {
         }
     }
 
-    // Verifica aumento de ocorrências
-    const mesAtual = 6; // Julho (0-index)
+    const mesAtual = 6;
     if (mesAtual >= 2) {
         const mesAnterior = MESES[mesAtual - 1];
         const mesAtualNome = MESES[mesAtual];
@@ -793,475 +410,114 @@ function renderizarAlertas() {
         }
     }
 
-    if (alerts.length === 0) {
-        container.innerHTML = `<span class="alerta-item info">✅ Nenhum alerta no momento</span>`;
-    } else {
-        container.innerHTML = alerts.map(a =>
-            `<span class="alerta-item ${a.classe}">${a.text}</span>`
-        ).join('');
-    }
-}
-
-function renderizarTabelaInd() {
-    const container = document.getElementById('tabelaIndContainer');
-    let html = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Mês</th>
-                    <th class="text-right">IND 2026</th>
-                    <th class="text-right">MDSO</th>
-                    <th class="text-right">µ</th>
-                    <th class="text-right">µ+1σ</th>
-                    <th class="text-right">µ+2σ</th>
-                    <th class="text-right">µ+3σ</th>
-                    <th>Situação</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-    for (const mes of MESES) {
-        const ind = getInd2026(mes);
-        const situacao = getSituacaoInd(ind);
-        const isSemDados = ind === null || ind === undefined;
-
-        html += `
-            <tr>
-                <td><strong>${mes.charAt(0) + mes.slice(1).toLowerCase()}</strong></td>
-                <td class="text-right">${isSemDados ? '—' : ind.toFixed(2)}</td>
-                <td class="text-right">${PARAMETROS.MDSO.toFixed(2)}</td>
-                <td class="text-right">${PARAMETROS.mu.toFixed(2)}</td>
-                <td class="text-right">${PARAMETROS['mu+1sigma'].toFixed(2)}</td>
-                <td class="text-right">${PARAMETROS['mu+2sigma'].toFixed(2)}</td>
-                <td class="text-right">${PARAMETROS['mu+3sigma'].toFixed(2)}</td>
-                <td><span class="status-ind ${situacao.classe}">${isSemDados ? 'Sem dados' : situacao.label}</span></td>
-            </tr>
-        `;
-    }
-
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-
-function renderizarTabelaHistorica() {
-    const container = document.getElementById('tabelaHistoricaContainer');
-    let html = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Mês</th>
-                    <th class="text-right">2023</th>
-                    <th class="text-right">2024</th>
-                    <th class="text-right">2025</th>
-                    <th class="text-right">Média</th>
-                    <th class="text-right">IND 2026</th>
-                    <th>Comparação</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-    for (const mes of MESES) {
-        const dados = historico[mes];
-        const v2023 = dados ? dados['2023'] : null;
-        const v2024 = dados ? dados['2024'] : null;
-        const v2025 = dados ? dados['2025'] : null;
-        const media = getMediaHistorico(mes);
-        const ind2026 = getInd2026(mes);
-
-        let comparacao = '';
-        if (ind2026 !== null && media !== null) {
-            const diff = ind2026 - media;
-            if (diff > 0.05) comparacao = `<span class="acima-media">⬆ +${diff.toFixed(2)}</span>`;
-            else if (diff < -0.05) comparacao = `<span class="abaixo-media">⬇ ${diff.toFixed(2)}</span>`;
-            else comparacao = `<span class="na-media">➖ ${diff.toFixed(2)}</span>`;
-        } else if (ind2026 === null) {
-            comparacao = '<span style="color:#95a5a6;">Sem dados</span>';
-        } else {
-            comparacao = '<span style="color:#95a5a6;">—</span>';
-        }
-
-        html += `
-            <tr>
-                <td><strong>${mes.charAt(0) + mes.slice(1).toLowerCase()}</strong></td>
-                <td class="text-right">${v2023 !== null ? v2023.toFixed(2) : '—'}</td>
-                <td class="text-right">${v2024 !== null ? v2024.toFixed(2) : '—'}</td>
-                <td class="text-right">${v2025 !== null ? v2025.toFixed(2) : '—'}</td>
-                <td class="text-right"><strong>${media !== null ? media.toFixed(2) : '—'}</strong></td>
-                <td class="text-right">${ind2026 !== null ? ind2026.toFixed(2) : '—'}</td>
-                <td>${comparacao}</td>
-            </tr>
-        `;
-    }
-
-    // Total / Média Geral
-    const mediaGeral = getMediaGeralHistorico();
-    html += `
-        <tr class="total-row">
-            <td><strong>MÉDIA GERAL</strong></td>
-            <td class="text-right">—</td>
-            <td class="text-right">—</td>
-            <td class="text-right">—</td>
-            <td class="text-right"><strong>${mediaGeral !== null ? mediaGeral.toFixed(2) : '—'}</strong></td>
-            <td class="text-right">—</td>
-            <td>—</td>
-        </tr>
-    `;
-
-    html += `</tbody></table>`;
-    container.innerHTML = html;
+    container.innerHTML = alerts.length === 0
+        ? `<span class="alerta-item info">✅ Nenhum alerta no momento</span>`
+        : alerts.map(a => `<span class="alerta-item ${a.classe}">${a.text}</span>`).join('');
 }
 
 // ================================================================
-// 4. GRÁFICOS
+// GRÁFICOS
 // ================================================================
 
 let charts = {};
 
-function criarGraficoPrincipal() {
-    const ctx = document.getElementById('chartIndPrincipal').getContext('2d');
-
-    const labels = MESES_LABEL;
-    const ind2026Values = MESES.map(m => getInd2026(m));
-
-    // Parâmetros de referência (linhas constantes)
-    const refValues = {
-        MDSO: MESES.map(() => PARAMETROS.MDSO),
-        mu: MESES.map(() => PARAMETROS.mu),
-        mu1: MESES.map(() => PARAMETROS['mu+1sigma']),
-        mu2: MESES.map(() => PARAMETROS['mu+2sigma']),
-        mu3: MESES.map(() => PARAMETROS['mu+3sigma'])
-    };
-
-    if (charts.principal) charts.principal.destroy();
-
-    charts.principal = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'IND 2026',
-                    data: ind2026Values,
-                    borderColor: '#2a6df4',
-                    backgroundColor: 'rgba(42, 109, 244, 0.1)',
-                    borderWidth: 3,
-                    fill: false,
-                    tension: 0.3,
-                    pointBackgroundColor: '#2a6df4',
-                    pointRadius: 5,
-                    spanGaps: false
-                },
-                {
-                    label: 'MDSO',
-                    data: refValues.MDSO,
-                    borderColor: '#e74c3c',
-                    borderWidth: 2,
-                    borderDash: [8, 4],
-                    fill: false,
-                    pointRadius: 0
-                },
-                {
-                    label: 'µ',
-                    data: refValues.mu,
-                    borderColor: '#7f8c8d',
-                    borderWidth: 1.5,
-                    borderDash: [4, 4],
-                    fill: false,
-                    pointRadius: 0
-                },
-                {
-                    label: 'µ + 1σ',
-                    data: refValues.mu1,
-                    borderColor: '#f39c12',
-                    borderWidth: 1.5,
-                    borderDash: [4, 4],
-                    fill: false,
-                    pointRadius: 0
-                },
-                {
-                    label: 'µ + 2σ',
-                    data: refValues.mu2,
-                    borderColor: '#e67e22',
-                    borderWidth: 1.5,
-                    borderDash: [4, 4],
-                    fill: false,
-                    pointRadius: 0
-                },
-                {
-                    label: 'µ + 3σ',
-                    data: refValues.mu3,
-                    borderColor: '#e74c3c',
-                    borderWidth: 1.5,
-                    borderDash: [4, 4],
-                    fill: false,
-                    pointRadius: 0
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: { usePointStyle: true, padding: 12, font: { size: 11 } }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 0.1 }
-                }
-            }
-        }
-    });
-}
-
-function criarGraficoHistorico() {
-    const ctx = document.getElementById('chartHistorico').getContext('2d');
-
-    const labels = MESES_LABEL;
-    const medias = MESES.map(m => getMediaHistorico(m));
-    const mediaGeral = getMediaGeralHistorico();
-
-    if (charts.historico) charts.historico.destroy();
-
-    charts.historico = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Média Histórica (3 anos)',
-                    data: medias,
-                    backgroundColor: 'rgba(42, 109, 244, 0.6)',
-                    borderColor: '#2a6df4',
-                    borderWidth: 1,
-                    borderRadius: 4
-                },
-                {
-                    label: 'Média Geral Histórica',
-                    data: MESES.map(() => mediaGeral),
-                    borderColor: '#e74c3c',
-                    borderWidth: 2,
-                    borderDash: [6, 4],
-                    type: 'line',
-                    fill: false,
-                    pointRadius: 0
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: { usePointStyle: true, padding: 10, font: { size: 10 } }
-                }
-            },
-            scales: {
-                y: { beginAtZero: true, ticks: { stepSize: 0.1 } }
-            }
-        }
-    });
-}
-
-function criarGraficoComparativo() {
-    const ctx = document.getElementById('chartComparativo').getContext('2d');
-
-    const labels = MESES_LABEL;
-    const ind2026Values = MESES.map(m => getInd2026(m));
-    const medias = MESES.map(m => getMediaHistorico(m));
-
-    if (charts.comparativo) charts.comparativo.destroy();
-
-    charts.comparativo = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'IND 2026',
-                    data: ind2026Values,
-                    backgroundColor: 'rgba(42, 109, 244, 0.7)',
-                    borderColor: '#2a6df4',
-                    borderWidth: 1,
-                    borderRadius: 4
-                },
-                {
-                    label: 'Média Histórica',
-                    data: medias,
-                    backgroundColor: 'rgba(231, 76, 60, 0.6)',
-                    borderColor: '#e74c3c',
-                    borderWidth: 1,
-                    borderRadius: 4
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: { usePointStyle: true, padding: 10, font: { size: 10 } }
-                }
-            },
-            scales: {
-                y: { beginAtZero: true, ticks: { stepSize: 0.1 } }
-            }
-        }
-    });
-}
-
 function criarGraficoOcorrenciasTipo() {
     const ctx = document.getElementById('chartOcorrenciasTipo').getContext('2d');
-
     const dados = ocorrenciasResumo.porTipo;
     const sorted = Object.entries(dados).sort((a, b) => b[1] - a[1]);
     const top10 = sorted.slice(0, 10);
-
     const cores = ['#2a6df4', '#e67e22', '#27ae60', '#e74c3c', '#8e44ad', '#3498db', '#e84393', '#f39c12', '#1abc9c', '#7f8c8d'];
 
     if (charts.tipo) charts.tipo.destroy();
-
     charts.tipo = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: top10.map(t => t[0]),
-            datasets: [{
-                data: top10.map(t => t[1]),
-                backgroundColor: cores.slice(0, top10.length)
-            }]
+            datasets: [{ data: top10.map(t => t[1]), backgroundColor: cores.slice(0, top10.length) }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'right',
-                    labels: { font: { size: 9 }, boxWidth: 12, padding: 8 }
-                }
-            }
+            plugins: { legend: { position: 'right', labels: { font: { size: 9 }, boxWidth: 12, padding: 8 } } }
         }
     });
 }
 
 function criarGraficoOcorrenciasOrigem() {
     const ctx = document.getElementById('chartOcorrenciasOrigem').getContext('2d');
-
     const dados = ocorrenciasResumo.porOrigem;
     const cores = ['#2a6df4', '#e67e22', '#27ae60'];
 
     if (charts.origem) charts.origem.destroy();
-
     charts.origem = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: Object.keys(dados),
-            datasets: [{
-                data: Object.values(dados),
-                backgroundColor: cores
-            }]
+            datasets: [{ data: Object.values(dados), backgroundColor: cores }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'right',
-                    labels: { font: { size: 10 }, boxWidth: 12, padding: 8 }
-                }
-            }
+            plugins: { legend: { position: 'right', labels: { font: { size: 10 }, boxWidth: 12, padding: 8 } } }
         }
     });
 }
 
 function criarGraficoIncidentes() {
     const ctx = document.getElementById('chartIncidentes').getContext('2d');
-
     const anos = ['2023', '2024', '2025', '2026'];
     const potencial = anos.map(a => incidentes[a] ? incidentes[a].potencial : 0);
     const critico = anos.map(a => incidentes[a] ? incidentes[a].critico : 0);
 
     if (charts.incidentes) charts.incidentes.destroy();
-
     charts.incidentes = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: anos,
             datasets: [
-                {
-                    label: 'Potencial',
-                    data: potencial,
-                    backgroundColor: '#27ae60',
-                    borderRadius: 4
-                },
-                {
-                    label: 'Crítico',
-                    data: critico,
-                    backgroundColor: '#e74c3c',
-                    borderRadius: 4
-                }
+                { label: 'Potencial', data: potencial, backgroundColor: '#27ae60', borderRadius: 4 },
+                { label: 'Crítico', data: critico, backgroundColor: '#e74c3c', borderRadius: 4 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: { usePointStyle: true, padding: 10, font: { size: 10 } }
-                }
-            },
-            scales: {
-                y: { beginAtZero: true, ticks: { stepSize: 1 } }
-            }
+            plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 10, font: { size: 10 } } } },
+            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
         }
     });
 }
 
 function criarGraficoTendencia() {
     const ctx = document.getElementById('chartTendencia').getContext('2d');
+    const labels = MESES_LABEL.slice(0, 8);
+    const dados = MESES.slice(0, 8).map(m => ocorrenciasResumo.porMes[m] || 0);
+    const predominantes = MESES.slice(0, 8).map(m => ocorrenciasResumo.predominantePorMes[m] || '');
 
-    const labels = MESES_LABEL;
-    const dados = MESES.map(m => ocorrenciasResumo.porMes[m] || 0);
-    const predominantes = MESES.map(m => ocorrenciasResumo.predominantePorMes[m] || '');
-
-    // Cria labels com o tipo predominante
     const labelsComTipo = labels.map((label, i) => {
         const pred = predominantes[i];
         return pred ? `${label}\n(${pred})` : label;
     });
 
     if (charts.tendencia) charts.tendencia.destroy();
-
     charts.tendencia = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: labelsComTipo,
             datasets: [{
                 label: 'Ocorrências',
                 data: dados,
+                backgroundColor: dados.map(v => v > 0 ? '#2a6df4' : '#e0e4e8'),
                 borderColor: '#2a6df4',
-                backgroundColor: 'rgba(42, 109, 244, 0.1)',
-                fill: true,
-                tension: 0.3,
-                pointBackgroundColor: dados.map(v => v > 0 ? '#2a6df4' : '#95a5a6'),
-                pointRadius: 4
+                borderWidth: 1,
+                borderRadius: 4
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
-                legend: {
-                    position: 'top',
-                    labels: { usePointStyle: true, padding: 10, font: { size: 10 } }
-                },
+                legend: { display: false },
                 tooltip: {
                     callbacks: {
                         afterLabel: function(context) {
@@ -1273,61 +529,27 @@ function criarGraficoTendencia() {
                 }
             },
             scales: {
-                y: { beginAtZero: true, ticks: { stepSize: 5 } }
+                y: { beginAtZero: true, ticks: { stepSize: 10 } },
+                x: {
+                    ticks: { font: { size: 9 } }
+                }
             }
         }
     });
 }
 
 // ================================================================
-// 5. FILTROS
+// INICIALIZAÇÃO
 // ================================================================
 
-function aplicarFiltros() {
-    // Re-renderiza tudo com os filtros aplicados
+document.addEventListener('DOMContentLoaded', function() {
     renderizarKPIs();
     renderizarAlertas();
-    renderizarTabelaInd();
-    renderizarTabelaHistorica();
-
-    // Recria gráficos
-    criarGraficoPrincipal();
-    criarGraficoHistorico();
-    criarGraficoComparativo();
     criarGraficoOcorrenciasTipo();
     criarGraficoOcorrenciasOrigem();
     criarGraficoIncidentes();
     criarGraficoTendencia();
-}
-
-function limparFiltros() {
-    document.getElementById('filtroAno').value = '2026';
-    document.getElementById('filtroMes').value = '';
-    document.getElementById('filtroOrgao').value = '';
-    document.getElementById('filtroComponente').value = '';
-    document.getElementById('filtroOrigem').value = '';
-    aplicarFiltros();
-}
-
-// ================================================================
-// 6. INICIALIZAÇÃO
-// ================================================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    aplicarFiltros();
-
-    // Event listeners para filtros automáticos
-    document.querySelectorAll('.filters select').forEach(select => {
-        select.addEventListener('change', aplicarFiltros);
-    });
 });
-
-// ================================================================
-// 7. EXPOSIÇÃO GLOBAL PARA OS BOTÕES
-// ================================================================
-
-window.aplicarFiltros = aplicarFiltros;
-window.limparFiltros = limparFiltros;
 </script>
 
 </body>
