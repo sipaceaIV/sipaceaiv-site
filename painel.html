@@ -164,6 +164,66 @@
         .alerta-item.sucesso { background: #d5f5e3; color: #1a7a42; }
         .alerta-item.info { background: #dbe5fe; color: #1a4fbe; }
 
+        .data-input-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px dashed #3498db;
+        }
+
+        .data-input-section h3 {
+            color: #1a2b4c;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .data-input-section .instruction {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #2c3e50;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .data-input-section code {
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #c0392b;
+        }
+
+        .data-input-section .btn-update {
+            background: #2a6df4;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .data-input-section .btn-update:hover {
+            background: #1a4fbe;
+        }
+
+        .data-input-section textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid #dce1e8;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-bottom: 12px;
+            resize: vertical;
+        }
+
         @media (max-width: 1024px) {
             .charts-grid { grid-template-columns: 1fr; }
             .chart-box.full { grid-column: 1; }
@@ -175,6 +235,7 @@
             .kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .kpi-card { padding: 10px 12px; }
             .kpi-card .value { font-size: 20px; }
+            .data-input-section textarea { min-height: 100px; font-size: 11px; }
         }
 
         .footer {
@@ -200,9 +261,81 @@
             </div>
         </div>
         <div class="info">
-            <span class="badge">📅 Dados: 2026</span>
-            <span class="badge">🔄 Atualizado: Agosto/2026</span>
+            <span class="badge">📅 Dados: <span id="anoReferencia">2026</span></span>
+            <span class="badge">🔄 Atualizado: <span id="dataAtualizacao">Agosto/2026</span></span>
         </div>
+    </div>
+
+    <!-- ========== SEÇÃO PARA ATUALIZAR DADOS ========== -->
+    <div class="data-input-section">
+        <h3>📝 ATUALIZAR DADOS DO SIGCEA</h3>
+        <div class="instruction">
+            <strong>Como atualizar:</strong><br>
+            1. Copie os novos dados do SIGCEA no formato JSON abaixo<br>
+            2. Cole no campo de texto e clique em "Atualizar Dashboard"<br>
+            3. O sistema irá recarregar automaticamente todos os gráficos e indicadores<br><br>
+            <strong>Estrutura esperada:</strong>
+            <code>{"incidentes": {"2024": {"potencial": 6, "critico": 1, "total": 7}, ...}, "ocorrencias": {...}}</code>
+        </div>
+        <textarea id="jsonDataInput" placeholder="Cole aqui os dados JSON do SIGCEA...">{
+  "anoReferencia": "2026",
+  "dataAtualizacao": "Agosto/2026",
+  "incidentes": {
+    "2023": {"potencial": 7, "critico": 0, "total": 7},
+    "2024": {"potencial": 6, "critico": 1, "total": 7},
+    "2025": {"potencial": 14, "critico": 0, "total": 14},
+    "2026": {"potencial": 8, "critico": 0, "total": 8}
+  },
+  "ocorrencias": {
+    "porTipo": {
+      "SEPARAÇÃO": 14,
+      "BIRD": 67,
+      "FAUNA": 20,
+      "COORDENAÇÃO": 55,
+      "EMERGÊNCIA": 10,
+      "CALLSIGN": 4,
+      "TRANSPONDER": 7,
+      "INTRUDER": 9,
+      "RI": 10,
+      "RD-ITA": 15,
+      "DRONE": 4,
+      "LASER": 6,
+      "AUTORIZAÇÃO": 4,
+      "OUTROS_TIPOS": 63
+    },
+    "porOrigem": {
+      "FNO": 210,
+      "RELPREV": 79,
+      "Fno-coordenação": 37
+    },
+    "porMes": {
+      "JANEIRO": 68,
+      "FEVEREIRO": 44,
+      "MARÇO": 49,
+      "ABRIL": 37,
+      "MAIO": 57,
+      "JUNHO": 48,
+      "JULHO": 36,
+      "AGOSTO": 7,
+      "SETEMBRO": 0,
+      "OUTUBRO": 0,
+      "NOVEMBRO": 0,
+      "DEZEMBRO": 0
+    },
+    "predominantePorMes": {
+      "JANEIRO": "Ocorrência ATS",
+      "FEVEREIRO": "BIRD",
+      "MARÇO": "COORDENAÇÃO",
+      "ABRIL": "OUTROS",
+      "MAIO": "BIRD",
+      "JUNHO": "COORDENAÇÃO",
+      "JULHO": "COORDENAÇÃO",
+      "AGOSTO": "COORDENAÇÃO"
+    }
+  }
+}</textarea>
+        <button class="btn-update" onclick="atualizarDados()">🔄 Atualizar Dashboard</button>
+        <button class="btn-update" style="background: #27ae60; margin-left: 10px;" onclick="resetarDados()">↩️ Restaurar Dados Originais</button>
     </div>
 
     <!-- ========== ALERTAS ========== -->
@@ -237,99 +370,182 @@
     </div>
 
     <div class="footer">
-        SIPACEA IV · Dados extraídos do SIGCEA 2026
+        SIPACEA IV · Dados extraídos do SIGCEA <span id="anoFooter">2026</span>
     </div>
 
 </div>
 
 <script>
 // ================================================================
-// DADOS EXTRAÍDOS DO ARQUIVO movimento_nadso_2026.html
+// ========== SISTEMA DE DADOS CENTRALIZADO ==========
 // ================================================================
 
-// Incidentes por ano (extraídos da primeira tabela)
-const incidentes = {
-    '2023': { potencial: 7, critico: 0, total: 7 },
-    '2024': { potencial: 6, critico: 1, total: 7 },
-    '2025': { potencial: 14, critico: 0, total: 14 },
-    '2026': { potencial: 8, critico: 0, total: 8 }
-};
-
-// Resumo das ocorrências (extraído das contagens do HTML)
-const ocorrenciasResumo = {
-    porTipo: {
-        'SEPARAÇÃO': 14
-        'BIRD': 67,
-        'FAUNA': 20,
-        'COORDENAÇÃO': 55,
-        'EMERGÊNCIA': 10,
-        'CALLSIGN': 4,
-        'TRANSPONDER': 7,
-        'INTRUDER': 9,
-        'RI': 10,
-        'RD-ITA': 15,
-        'DRONE': 4,
-        'LASER': 6,
-        'AUTORIZAÇÃO': 4,
-        'OUTROS_TIPOS': 63
+// DADOS PADRÃO (BASEADO NO ARQUIVO FORNECIDO)
+const DADOS_PADRAO = {
+    anoReferencia: "2026",
+    dataAtualizacao: "Agosto/2026",
+    incidentes: {
+        '2023': { potencial: 7, critico: 0, total: 7 },
+        '2024': { potencial: 6, critico: 1, total: 7 },
+        '2025': { potencial: 14, critico: 0, total: 14 },
+        '2026': { potencial: 8, critico: 0, total: 8 }
     },
-    porOrigem: {
-        'FNO': 210,
-        'RELPREV': 79,
-        'Fno-coordenação': 37
-    },
-    porMes: {
-        'JANEIRO': 68,
-        'FEVEREIRO': 44,
-        'MARÇO': 49,
-        'ABRIL': 37,
-        'MAIO': 57,
-        'JUNHO': 48,
-        'JULHO': 36,
-        'AGOSTO': 7,
-        'SETEMBRO': 0,
-        'OUTUBRO': 0,
-        'NOVEMBRO': 0,
-        'DEZEMBRO': 0
-    },
-    predominantePorMes: {
-        'JANEIRO': 'Ocorrência ATS',
-        'FEVEREIRO': 'BIRD',
-        'MARÇO': 'COORDENAÇÃO',
-        'ABRIL': 'OUTROS',
-        'MAIO': 'BIRD',
-        'JUNHO': 'COORDENAÇÃO',
-        'JULHO': 'COORDENAÇÃO',
-        'AGOSTO': 'COORDENAÇÃO'
+    ocorrencias: {
+        porTipo: {
+            'SEPARAÇÃO': 14,
+            'BIRD': 67,
+            'FAUNA': 20,
+            'COORDENAÇÃO': 55,
+            'EMERGÊNCIA': 10,
+            'CALLSIGN': 4,
+            'TRANSPONDER': 7,
+            'INTRUDER': 9,
+            'RI': 10,
+            'RD-ITA': 15,
+            'DRONE': 4,
+            'LASER': 6,
+            'AUTORIZAÇÃO': 4,
+            'OUTROS_TIPOS': 63
+        },
+        porOrigem: {
+            'FNO': 210,
+            'RELPREV': 79,
+            'Fno-coordenação': 37
+        },
+        porMes: {
+            'JANEIRO': 68,
+            'FEVEREIRO': 44,
+            'MARÇO': 49,
+            'ABRIL': 37,
+            'MAIO': 57,
+            'JUNHO': 48,
+            'JULHO': 36,
+            'AGOSTO': 7,
+            'SETEMBRO': 0,
+            'OUTUBRO': 0,
+            'NOVEMBRO': 0,
+            'DEZEMBRO': 0
+        },
+        predominantePorMes: {
+            'JANEIRO': 'Ocorrência ATS',
+            'FEVEREIRO': 'BIRD',
+            'MARÇO': 'COORDENAÇÃO',
+            'ABRIL': 'OUTROS',
+            'MAIO': 'BIRD',
+            'JUNHO': 'COORDENAÇÃO',
+            'JULHO': 'COORDENAÇÃO',
+            'AGOSTO': 'COORDENAÇÃO'
+        }
     }
 };
 
 // ================================================================
-// FUNÇÕES AUXILIARES
+// ========== VARIÁVEIS GLOBAIS ==========
 // ================================================================
+
+let dadosAtuais = JSON.parse(JSON.stringify(DADOS_PADRAO));
+let alerts = [];
+let charts = {};
 
 const MESES = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];
 const MESES_LABEL = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
 // ================================================================
-// VARIÁVEIS GLOBAIS
+// ========== FUNÇÕES DE ACESSO AOS DADOS ==========
 // ================================================================
-let alerts = [];
+
+function getIncidentes() {
+    return dadosAtuais.incidentes;
+}
+
+function getOcorrencias() {
+    return dadosAtuais.ocorrencias;
+}
+
+function getAnoReferencia() {
+    return dadosAtuais.anoReferencia;
+}
+
+function getDataAtualizacao() {
+    return dadosAtuais.dataAtualizacao;
+}
 
 // ================================================================
-// RENDERIZAÇÃO DE KPIs
+// ========== FUNÇÃO PARA ATUALIZAR DADOS ==========
 // ================================================================
+
+function atualizarDados() {
+    const textarea = document.getElementById('jsonDataInput');
+    try {
+        const novosDados = JSON.parse(textarea.value);
+        
+        // Valida estrutura básica
+        if (!novosDados.incidentes || !novosDados.ocorrencias) {
+            throw new Error('Estrutura inválida: faltando "incidentes" ou "ocorrencias"');
+        }
+
+        // Atualiza dados
+        dadosAtuais = {
+            anoReferencia: novosDados.anoReferencia || dadosAtuais.anoReferencia,
+            dataAtualizacao: novosDados.dataAtualizacao || dadosAtuais.dataAtualizacao,
+            incidentes: novosDados.incidentes,
+            ocorrencias: novosDados.ocorrencias
+        };
+
+        // Atualiza cabeçalho
+        document.getElementById('anoReferencia').textContent = dadosAtuais.anoReferencia;
+        document.getElementById('dataAtualizacao').textContent = dadosAtuais.dataAtualizacao;
+        document.getElementById('anoFooter').textContent = dadosAtuais.anoReferencia;
+
+        // Recarrega tudo
+        recarregarDashboard();
+        
+        // Feedback
+        alert('✅ Dados atualizados com sucesso!');
+    } catch (e) {
+        alert('❌ Erro ao atualizar dados: ' + e.message + '\n\nVerifique se o JSON está formatado corretamente.');
+        console.error('Erro ao processar JSON:', e);
+    }
+}
+
+function resetarDados() {
+    if (confirm('Restaurar dados originais?')) {
+        dadosAtuais = JSON.parse(JSON.stringify(DADOS_PADRAO));
+        document.getElementById('jsonDataInput').value = JSON.stringify(DADOS_PADRAO, null, 2);
+        document.getElementById('anoReferencia').textContent = dadosAtuais.anoReferencia;
+        document.getElementById('dataAtualizacao').textContent = dadosAtuais.dataAtualizacao;
+        document.getElementById('anoFooter').textContent = dadosAtuais.anoReferencia;
+        recarregarDashboard();
+        alert('✅ Dados restaurados com sucesso!');
+    }
+}
+
+// ================================================================
+// ========== RENDERIZAÇÃO ==========
+// ================================================================
+
+function recarregarDashboard() {
+    renderizarKPIs();
+    renderizarAlertas();
+    criarGraficoOcorrenciasTipo();
+    criarGraficoOcorrenciasOrigem();
+    criarGraficoIncidentes();
+    criarGraficoTendencia();
+}
 
 function renderizarKPIs() {
     const container = document.getElementById('kpiContainer');
-
-    const totalIncidentes = incidentes['2026'].total;
-    const potencial = incidentes['2026'].potencial;
-    const critico = incidentes['2026'].critico;
-    const totalOcorrencias = Object.values(ocorrenciasResumo.porMes).reduce((a, b) => a + b, 0);
+    const incidentes = getIncidentes();
+    const ocorrencias = getOcorrencias();
+    
+    const anoAtual = getAnoReferencia();
+    const totalIncidentes = incidentes[anoAtual] ? incidentes[anoAtual].total : 0;
+    const potencial = incidentes[anoAtual] ? incidentes[anoAtual].potencial : 0;
+    const critico = incidentes[anoAtual] ? incidentes[anoAtual].critico : 0;
+    const totalOcorrencias = Object.values(ocorrencias.porMes).reduce((a, b) => a + b, 0);
 
     const cards = [
-        { label: 'Incidentes', value: totalIncidentes, cls: 'vermelho', detalhe: '2026' },
+        { label: 'Incidentes', value: totalIncidentes, cls: 'vermelho', detalhe: anoAtual },
         { label: 'Potenciais', value: potencial, cls: 'laranja', detalhe: 'ocorrências' },
         { label: 'Críticos', value: critico, cls: 'vermelho', detalhe: 'ocorrências' },
         { label: 'Ocorrências', value: totalOcorrencias, cls: 'azul', detalhe: 'total' }
@@ -343,26 +559,46 @@ function renderizarKPIs() {
     `).join('');
 }
 
-// ================================================================
-// RENDERIZAÇÃO DE ALERTAS
-// ================================================================
-
 function renderizarAlertas() {
     const container = document.getElementById('alertasLista');
-    
-    // Limpa alertas anteriores
     alerts = [];
     
-    // Verifica aumento significativo em Agosto
-    const mesAtual = 7; // Agosto (índice 7)
+    const ocorrencias = getOcorrencias();
+    const mesAtual = new Date().getMonth();
+    
+    // Verifica aumento significativo no mês atual
     if (mesAtual >= 1) {
         const mesAnterior = MESES[mesAtual - 1];
         const mesAtualNome = MESES[mesAtual];
-        const valAnterior = ocorrenciasResumo.porMes[mesAnterior] || 0;
-        const valAtual = ocorrenciasResumo.porMes[mesAtualNome] || 0;
+        const valAnterior = ocorrencias.porMes[mesAnterior] || 0;
+        const valAtual = ocorrencias.porMes[mesAtualNome] || 0;
         if (valAtual > valAnterior * 1.3 && valAtual > 5) {
-            alerts.push({ text: `📈 Aumento significativo de ocorrências em ${mesAtualNome} (${valAtual} vs ${valAnterior})`, classe: 'atencao' });
+            alerts.push({ 
+                text: `📈 Aumento significativo de ocorrências em ${mesAtualNome} (${valAtual} vs ${valAnterior})`, 
+                classe: 'atencao' 
+            });
         }
+    }
+
+    // Verifica meses com alto volume
+    for (const mes of MESES) {
+        const valor = ocorrencias.porMes[mes] || 0;
+        if (valor > 60) {
+            alerts.push({ 
+                text: `⚠️ Alto volume em ${mes}: ${valor} ocorrências`, 
+                classe: 'critico' 
+            });
+            break;
+        }
+    }
+
+    // Verifica total de ocorrências
+    const total = Object.values(ocorrencias.porMes).reduce((a, b) => a + b, 0);
+    if (total > 350) {
+        alerts.push({
+            text: `📊 Total acumulado de ${total} ocorrências no ano`,
+            classe: 'info'
+        });
     }
 
     container.innerHTML = alerts.length === 0
@@ -371,14 +607,12 @@ function renderizarAlertas() {
 }
 
 // ================================================================
-// GRÁFICOS
+// ========== GRÁFICOS ==========
 // ================================================================
-
-let charts = {};
 
 function criarGraficoOcorrenciasTipo() {
     const ctx = document.getElementById('chartOcorrenciasTipo').getContext('2d');
-    const dados = ocorrenciasResumo.porTipo;
+    const dados = getOcorrencias().porTipo;
     const sorted = Object.entries(dados).sort((a, b) => b[1] - a[1]);
     const top10 = sorted.slice(0, 10);
     const cores = ['#2a6df4', '#e67e22', '#27ae60', '#e74c3c', '#8e44ad', '#3498db', '#e84393', '#f39c12', '#1abc9c', '#7f8c8d'];
@@ -400,7 +634,7 @@ function criarGraficoOcorrenciasTipo() {
 
 function criarGraficoOcorrenciasOrigem() {
     const ctx = document.getElementById('chartOcorrenciasOrigem').getContext('2d');
-    const dados = ocorrenciasResumo.porOrigem;
+    const dados = getOcorrencias().porOrigem;
     const cores = ['#2a6df4', '#e67e22', '#27ae60'];
 
     if (charts.origem) charts.origem.destroy();
@@ -420,7 +654,8 @@ function criarGraficoOcorrenciasOrigem() {
 
 function criarGraficoIncidentes() {
     const ctx = document.getElementById('chartIncidentes').getContext('2d');
-    const anos = ['2023', '2024', '2025', '2026'];
+    const incidentes = getIncidentes();
+    const anos = Object.keys(incidentes).sort();
     const potencial = anos.map(a => incidentes[a] ? incidentes[a].potencial : 0);
     const critico = anos.map(a => incidentes[a] ? incidentes[a].critico : 0);
 
@@ -445,9 +680,10 @@ function criarGraficoIncidentes() {
 
 function criarGraficoTendencia() {
     const ctx = document.getElementById('chartTendencia').getContext('2d');
+    const ocorrencias = getOcorrencias();
     const labels = MESES_LABEL.slice(0, 8);
-    const dados = MESES.slice(0, 8).map(m => ocorrenciasResumo.porMes[m] || 0);
-    const predominantes = MESES.slice(0, 8).map(m => ocorrenciasResumo.predominantePorMes[m] || '');
+    const dados = MESES.slice(0, 8).map(m => ocorrencias.porMes[m] || 0);
+    const predominantes = MESES.slice(0, 8).map(m => ocorrencias.predominantePorMes[m] || '');
 
     const labelsComTipo = labels.map((label, i) => {
         const pred = predominantes[i];
@@ -494,17 +730,25 @@ function criarGraficoTendencia() {
 }
 
 // ================================================================
-// INICIALIZAÇÃO
+// ========== INICIALIZAÇÃO ==========
 // ================================================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    renderizarKPIs();
-    renderizarAlertas();
-    criarGraficoOcorrenciasTipo();
-    criarGraficoOcorrenciasOrigem();
-    criarGraficoIncidentes();
-    criarGraficoTendencia();
+    // Preenche o textarea com os dados padrão formatados
+    document.getElementById('jsonDataInput').value = JSON.stringify(DADOS_PADRAO, null, 2);
+    
+    // Inicializa o dashboard
+    recarregarDashboard();
 });
+
+console.log('📊 SIPACEA IV - Sistema de Atualização de Dados');
+console.log('📝 Para atualizar os dados:');
+console.log('1. Acesse a seção "ATUALIZAR DADOS DO SIGCEA" no dashboard');
+console.log('2. Cole os novos dados no formato JSON');
+console.log('3. Clique em "Atualizar Dashboard"');
+console.log('');
+console.log('📋 Dados atuais carregados:');
+console.log(JSON.stringify(DADOS_PADRAO, null, 2));
 </script>
 
 </body>
