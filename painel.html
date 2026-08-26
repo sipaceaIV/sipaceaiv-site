@@ -247,30 +247,6 @@
 // DADOS EXTRAÍDOS DO ARQUIVO movimento_nadso_2026.html
 // ================================================================
 
-// PARÂMETROS DE REFERÊNCIA (fixos)
-const PARAMETROS = {
-    MDSO: 1.00,
-    mu: 0.85,
-    sigma: 0.15,
-    'mu+1sigma': 1.00,
-    'mu+2sigma': 1.15,
-    'mu+3sigma': 1.30
-};
-
-// IND mensal de 2026 (extraídos da primeira tabela)
-const ind2026 = {
-    'JANEIRO': 0.92,
-    'FEVEREIRO': 0.88,
-    'MARÇO': 0.95,
-    'ABRIL': 1.02,
-    'MAIO': 0.90,
-    'JUNHO': 0.85,
-    'JULHO': 0.78,
-    'AGOSTO': null,
-    'SETEMBRO': null,
-    'OUTUBRO': null,
-    'NOVEMBRO': null,
-    'DEZEMBRO': null
 };
 
 // Incidentes por ano (extraídos da primeira tabela)
@@ -379,25 +355,6 @@ function renderizarKPIs() {
             <div class="value">${c.value} <small>${c.detalhe}</small></div>
         </div>
     `).join('');
-}
-
-function renderizarAlertas() {
-    const container = document.getElementById('alertasLista');
-    const alerts = [];
-    const indAtual = getInd2026('JULHO');
-
-    if (indAtual !== null) {
-        if (indAtual >= PARAMETROS['mu+3sigma']) {
-            alerts.push({ text: '⚠️ IND acima de +3σ! Atenção máxima!', classe: 'critico' });
-        } else if (indAtual >= PARAMETROS['mu+2sigma']) {
-            alerts.push({ text: '⚠️ IND acima de +2σ! Atenção!', classe: 'critico' });
-        } else if (indAtual >= PARAMETROS['mu+1sigma']) {
-            alerts.push({ text: '⚡ IND acima de +1σ. Monitorar.', classe: 'atencao' });
-        }
-        if (indAtual >= PARAMETROS.MDSO) {
-            alerts.push({ text: '📊 IND atingiu/ultrapassou a MDSO.', classe: 'atencao' });
-        }
-    }
 
     const mesAtual = 6;
     if (mesAtual >= 2) {
