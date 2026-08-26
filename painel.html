@@ -247,8 +247,6 @@
 // DADOS EXTRAÍDOS DO ARQUIVO movimento_nadso_2026.html
 // ================================================================
 
-};
-
 // Incidentes por ano (extraídos da primeira tabela)
 const incidentes = {
     '2023': { potencial: 7, critico: 0, total: 7 },
@@ -317,21 +315,13 @@ const ocorrenciasResumo = {
 const MESES = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];
 const MESES_LABEL = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
-function getInd2026(mes) {
-    return ind2026[mes] !== undefined ? ind2026[mes] : null;
-}
-
-function getSituacaoInd(ind) {
-    if (ind === null || ind === undefined) return { label: 'Sem dados', classe: 'sem-dados' };
-    if (ind >= PARAMETROS['mu+3sigma']) return { label: 'Acima de +3σ', classe: 'alerta3' };
-    if (ind >= PARAMETROS['mu+2sigma']) return { label: 'Acima de +2σ', classe: 'alerta2' };
-    if (ind >= PARAMETROS['mu+1sigma']) return { label: 'Acima de +1σ', classe: 'alerta1' };
-    if (ind >= PARAMETROS.mu) return { label: 'Entre µ e +1σ', classe: 'atencao' };
-    return { label: 'Abaixo da média', classe: 'normal' };
-}
+// ================================================================
+// VARIÁVEIS GLOBAIS
+// ================================================================
+let alerts = [];
 
 // ================================================================
-// RENDERIZAÇÃO
+// RENDERIZAÇÃO DE KPIs
 // ================================================================
 
 function renderizarKPIs() {
@@ -355,9 +345,21 @@ function renderizarKPIs() {
             <div class="value">${c.value} <small>${c.detalhe}</small></div>
         </div>
     `).join('');
+}
 
-    const mesAtual = 6;
-    if (mesAtual >= 2) {
+// ================================================================
+// RENDERIZAÇÃO DE ALERTAS
+// ================================================================
+
+function renderizarAlertas() {
+    const container = document.getElementById('alertasLista');
+    
+    // Limpa alertas anteriores
+    alerts = [];
+    
+    // Verifica aumento significativo em Agosto
+    const mesAtual = 7; // Agosto (índice 7)
+    if (mesAtual >= 1) {
         const mesAnterior = MESES[mesAtual - 1];
         const mesAtualNome = MESES[mesAtual];
         const valAnterior = ocorrenciasResumo.porMes[mesAnterior] || 0;
