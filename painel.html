@@ -901,4 +901,92 @@ function criarGraficoIncidentes() {
     const critico = anos.map(a => incidentes[a] ? incidentes[a].critico : 0);
 
     if (charts.incidentes) charts.incidentes.destroy();
-    charts.incidentes
+    charts.incidentes = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: anos,
+            datasets: [
+                { label: 'Potencial', data: potencial, backgroundColor: '#27ae60', borderRadius: 4 },
+                { label: 'Crítico', data: critico, backgroundColor: '#e74c3c', borderRadius: 4 }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 10, font: { size: 10 } } } },
+            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+    });
+}
+
+function criarGraficoTendencia() {
+    const ctx = document.getElementById('chartTendencia').getContext('2d');
+    const ocorrencias = getOcorrencias();
+    const labels = MESES_LABEL.slice(0, 8);
+    const dados = MESES.slice(0, 8).map(m => ocorrencias.porMes[m] || 0);
+    const predominantes = MESES.slice(0, 8).map(m => ocorrencias.predominantePorMes[m] || '');
+
+    const labelsComTipo = labels.map((label, i) => {
+        const pred = predominantes[i];
+        return pred ? `${label}\n(${pred})` : label;
+    });
+
+    if (charts.tendencia) charts.tendencia.destroy();
+    charts.tendencia = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labelsComTipo,
+            datasets: [{
+                label: 'Ocorrências',
+                data: dados,
+                backgroundColor: dados.map(v => v > 0 ? '#2a6df4' : '#e0e4e8'),
+                borderColor: '#2a6df4',
+                borderWidth: 1,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        afterLabel: function(context) {
+                            const idx = context.dataIndex;
+                            const pred = predominantes[idx];
+                            return pred ? `Tipo predominante: ${pred}` : '';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 10 } },
+                x: { ticks: { font: { size: 9 } } }
+            }
+        }
+    });
+}
+
+// ================================================================
+// ========== INICIALIZAÇÃO ==========
+// ================================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    atualizarHeader();
+    recarregarDashboard();
+});
+
+// Fechar modal ao clicar fora
+document.getElementById('loginModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.add('hidden');
+    }
+});
+
+console.log('🔒 SIPACEA IV - Área Administrativa Protegida');
+console.log('🔑 Acesse clicando no cadeado no canto inferior direito');
+</script>
+
+</body>
+</html>
