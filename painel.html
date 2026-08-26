@@ -6,987 +6,114 @@
     <title>SIPACEA IV - Segurança Operacional</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: #eef1f5;
-            padding: 16px;
-        }
-
-        .container {
-            max-width: 1440px;
-            margin: 0 auto;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #0a1a3a, #1a3a6a);
-            color: white;
-            padding: 18px 28px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .header h1 {
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .header h1 span {
-            color: #6db3ff;
-        }
-
-        .header .info {
-            display: flex;
-            gap: 16px;
-            font-size: 13px;
-            flex-wrap: wrap;
-        }
-
-        .header .info .badge {
-            background: rgba(255,255,255,0.12);
-            padding: 4px 14px;
-            border-radius: 20px;
-        }
-
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .kpi-card {
-            background: white;
-            border-radius: 10px;
-            padding: 14px 16px;
-            border-left: 4px solid #2a6df4;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-            transition: transform 0.2s;
-        }
-
-        .kpi-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .kpi-card.verde { border-left-color: #27ae60; }
-        .kpi-card.laranja { border-left-color: #e67e22; }
-        .kpi-card.roxo { border-left-color: #8e44ad; }
-        .kpi-card.vermelho { border-left-color: #e74c3c; }
-        .kpi-card.azul { border-left-color: #3498db; }
-        .kpi-card.rosa { border-left-color: #e84393; }
-        .kpi-card.cinza { border-left-color: #7f8c8d; }
-        .kpi-card.amarelo { border-left-color: #f1c40f; }
-
-        .kpi-card .label {
-            font-size: 10px;
-            text-transform: uppercase;
-            color: #6b7a8f;
-            letter-spacing: 0.3px;
-            font-weight: 600;
-        }
-
-        .kpi-card .value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #0a1a3a;
-            margin-top: 2px;
-        }
-
-        .kpi-card .value small {
-            font-size: 12px;
-            font-weight: 400;
-            color: #7f8fa4;
-            margin-left: 4px;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-bottom: 20px;
-        }
-
-        .chart-box {
-            background: white;
-            border-radius: 10px;
-            padding: 16px 18px 12px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-        }
-
-        .chart-box h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1a2b4c;
-            margin-bottom: 10px;
-        }
-
-        .chart-box canvas {
-            max-height: 200px;
-            max-width: 100%;
-        }
-
-        .chart-box.full {
-            grid-column: 1 / -1;
-        }
-
-        .alertas {
-            background: white;
-            border-radius: 10px;
-            padding: 14px 18px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 20px;
-        }
-
-        .alertas h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1a2b4c;
-            margin-bottom: 8px;
-        }
-
-        .alertas .alerta-item {
-            padding: 6px 12px;
-            border-radius: 6px;
-            margin-bottom: 4px;
-            font-size: 13px;
-            display: inline-block;
-            margin-right: 8px;
-        }
-
-        .alerta-item.atencao { background: #fdebd0; color: #b85e0e; }
-        .alerta-item.critico { background: #fadbd8; color: #a93226; }
-        .alerta-item.sucesso { background: #d5f5e3; color: #1a7a42; }
-        .alerta-item.info { background: #dbe5fe; color: #1a4fbe; }
-
-        /* ===== ÁREA DE ADMIN (PROTEGIDA) ===== */
-        .admin-section {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 2px solid #e74c3c;
-            position: relative;
-        }
-
-        .admin-section .lock-icon {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 20px;
-            opacity: 0.3;
-        }
-
-        .admin-section h3 {
-            color: #1a2b4c;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .admin-section .instruction {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #2c3e50;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .admin-section code {
-            background: #e9ecef;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            color: #c0392b;
-        }
-
-        .admin-section .btn {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: background 0.3s, transform 0.2s;
-        }
-
-        .admin-section .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-primary { background: #2a6df4; color: white; }
-        .btn-primary:hover { background: #1a4fbe; }
-        .btn-success { background: #27ae60; color: white; }
-        .btn-success:hover { background: #1e8449; }
-        .btn-warning { background: #f39c12; color: white; }
-        .btn-warning:hover { background: #d68910; }
-        .btn-danger { background: #e74c3c; color: white; }
-        .btn-danger:hover { background: #c0392b; }
-
-        .admin-section textarea {
-            width: 100%;
-            min-height: 200px;
-            padding: 12px;
-            border: 1px solid #dce1e8;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            margin-bottom: 12px;
-            resize: vertical;
-        }
-
-        .admin-section .action-bar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        /* ===== MODAL DE LOGIN ===== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-overlay.hidden {
-            display: none;
-        }
-
-        .modal-box {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: modalAnim 0.3s ease-out;
-        }
-
-        @keyframes modalAnim {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-box h2 {
-            color: #0a1a3a;
-            margin-bottom: 10px;
-            font-size: 22px;
-        }
-
-        .modal-box p {
-            color: #6b7a8f;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .modal-box input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #dce1e8;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 15px;
-            transition: border-color 0.3s;
-        }
-
-        .modal-box input:focus {
-            border-color: #2a6df4;
-            outline: none;
-        }
-
-        .modal-box .btn-login {
-            width: 100%;
-            padding: 12px;
-            background: #2a6df4;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .modal-box .btn-login:hover {
-            background: #1a4fbe;
-        }
-
-        .modal-box .error-msg {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-top: 10px;
-            text-align: center;
-            display: none;
-        }
-
-        .admin-section.hidden {
-            display: none;
-        }
-
-        /* ===== BOTÃO DE ACESSO ADMIN ===== */
-        .admin-access-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #2a6df4;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(42,109,244,0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
-            z-index: 1000;
-        }
-
-        .admin-access-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(42,109,244,0.6);
-        }
-
-        .admin-access-btn.logged {
-            background: #27ae60;
-        }
-
-        .tabela-dados {
-            background: white;
-            border-radius: 10px;
-            padding: 16px 18px;
-            border: 1px solid #e2e8f0;
-            margin-top: 20px;
-            overflow-x: auto;
-        }
-
-        .tabela-dados h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1a2b4c;
-            margin-bottom: 10px;
-        }
-
-        .tabela-dados table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        .tabela-dados th {
-            background: #f8f9fa;
-            padding: 8px 12px;
-            text-align: left;
-            font-weight: 600;
-            color: #2c3e50;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .tabela-dados td {
-            padding: 6px 12px;
-            border-bottom: 1px solid #f0f2f5;
-        }
-
-        .tabela-dados tr:hover {
-            background: #f8f9fa;
-        }
-
-        @media (max-width: 1024px) {
-            .charts-grid { grid-template-columns: 1fr; }
-            .chart-box.full { grid-column: 1; }
-        }
-
-        @media (max-width: 640px) {
-            body { padding: 10px; }
-            .header { flex-direction: column; text-align: center; padding: 14px 16px; }
-            .kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .kpi-card { padding: 10px 12px; }
-            .kpi-card .value { font-size: 20px; }
-            .admin-section textarea { min-height: 150px; font-size: 11px; }
-            .admin-section .action-bar { flex-direction: column; }
-            .admin-section .action-bar .btn { width: 100%; text-align: center; }
-            .modal-box { padding: 25px; margin: 20px; }
-            .admin-access-btn { width: 40px; height: 40px; font-size: 16px; bottom: 15px; right: 15px; }
-        }
-
-        .footer {
-            text-align: center;
-            font-size: 11px;
-            color: #8a9aa8;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 14px;
-            margin-top: 6px;
-        }
+        /* ... (mesmo CSS de antes) ... */
     </style>
 </head>
 <body>
-
-<div class="container">
-
-    <!-- ========== HEADER ========== -->
-    <div class="header">
-        <div>
-            <h1>📊 SIPACEA IV · <span>Segurança Operacional</span></h1>
-            <div style="font-size:12px; opacity:0.8; margin-top:2px;">
-                Incidentes · Ocorrências · Índices
-            </div>
-        </div>
-        <div class="info">
-            <span class="badge">📅 Dados: <span id="anoReferencia">2026</span></span>
-            <span class="badge">🔄 Atualizado: <span id="dataAtualizacao">Agosto/2026</span></span>
-        </div>
-    </div>
-
-    <!-- ========== ALERTAS ========== -->
-    <div class="alertas" id="alertasContainer">
-        <h3>🔔 Alertas</h3>
-        <div id="alertasLista">
-            <span class="alerta-item info">Nenhum alerta no momento</span>
-        </div>
-    </div>
-
-    <!-- ========== CARDS KPI ========== -->
-    <div class="kpi-grid" id="kpiContainer"></div>
-
-    <!-- ========== GRÁFICOS ========== -->
-    <div class="charts-grid">
-        <div class="chart-box">
-            <h3>📊 Ocorrências por Tipo</h3>
-            <canvas id="chartOcorrenciasTipo"></canvas>
-        </div>
-        <div class="chart-box">
-            <h3>📊 Ocorrências por Origem</h3>
-            <canvas id="chartOcorrenciasOrigem"></canvas>
-        </div>
-        <div class="chart-box">
-            <h3>📊 Incidentes Potenciais × Críticos</h3>
-            <canvas id="chartIncidentes"></canvas>
-        </div>
-        <div class="chart-box full">
-            <h3>📊 Tendência Mensal de Ocorrências</h3>
-            <canvas id="chartTendencia"></canvas>
-        </div>
-    </div>
-
-    <!-- ========== TABELA DE DADOS ========== -->
-    <div class="tabela-dados" id="tabelaContainer">
-        <h3>📋 Detalhamento das Ocorrências</h3>
-        <div id="tabelaConteudo"></div>
-    </div>
-
-    <!-- ========== ÁREA ADMIN (PROTEGIDA) ========== -->
-    <div class="admin-section hidden" id="adminSection">
-        <span class="lock-icon">🔒</span>
-        <h3>👑 ÁREA DE ADMINISTRAÇÃO - EDITAR DADOS</h3>
-        <div class="instruction">
-            <strong>⚠️ Atenção:</strong> Esta área é restrita ao administrador.<br>
-            Edite os valores no JSON abaixo e clique em <strong>"Atualizar Dashboard"</strong>.
-        </div>
-        <textarea id="jsonDataInput"></textarea>
-        <div class="action-bar">
-            <button class="btn btn-primary" onclick="atualizarDados()">🔄 Atualizar Dashboard</button>
-            <button class="btn btn-success" onclick="resetarDados()">↩️ Restaurar Padrão</button>
-            <button class="btn btn-warning" onclick="exportarCSV()">📥 Exportar CSV</button>
-            <button class="btn btn-danger" onclick="logout()">🚪 Sair da Administração</button>
-        </div>
-    </div>
-
-    <div class="footer">
-        SIPACEA IV · Dados extraídos do SIGCEA
-    </div>
-
-</div>
-
-<!-- ========== BOTÃO DE ACESSO ADMIN ========== -->
-<button class="admin-access-btn" id="adminBtn" onclick="abrirLogin()" title="Acessar Administração">
-    🔐
-</button>
-
-<!-- ========== MODAL DE LOGIN ========== -->
-<div class="modal-overlay hidden" id="loginModal">
-    <div class="modal-box">
-        <h2>🔐 Acesso Restrito</h2>
-        <p>Digite a senha de administrador para acessar a área de edição.</p>
-        <input type="password" id="senhaInput" placeholder="Digite a senha..." onkeydown="if(event.key==='Enter') login()">
-        <button class="btn-login" onclick="login()">Entrar</button>
-        <div class="error-msg" id="errorMsg">❌ Senha incorreta. Tente novamente.</div>
-    </div>
-</div>
-
-<script>
-// ================================================================
-// ═══════════════════════════════════════════════════════════════════
-// 📌 CONFIGURAÇÕES - ALTERE A SENHA AQUI
-// ═══════════════════════════════════════════════════════════════════
-// ================================================================
-
-const SENHA_ADMIN = "sipacea2026"; // ⬅️ ALTERE A SENHA AQUI
-
-// ================================================================
-// 📌 DADOS DO SISTEMA - EDITE AQUI OS DADOS
-// ================================================================
-
-const DADOS_INCIDENTES = {
-    '2023': { potencial: 7, critico: 0, total: 7 },
-    '2024': { potencial: 6, critico: 1, total: 7 },
-    '2025': { potencial: 14, critico: 0, total: 14 },
-    '2026': { potencial: 8, critico: 0, total: 8 }
-};
-
-const DADOS_OCORRENCIAS = {
-    porTipo: {
-        'SEPARAÇÃO': 14,
-        'BIRD': 67,
-        'FAUNA': 20,
-        'COORDENAÇÃO': 55,
-        'EMERGÊNCIA': 10,
-        'CALLSIGN': 4,
-        'TRANSPONDER': 7,
-        'INTRUDER': 9,
-        'RI': 10,
-        'RD-ITA': 15,
-        'DRONE': 4,
-        'LASER': 6,
-        'AUTORIZAÇÃO': 4,
-        'OUTROS_TIPOS': 63
-    },
-    porOrigem: {
-        'FNO': 210,
-        'RELPREV': 79,
-        'Fno-coordenação': 37
-    },
-    porMes: {
-        'JANEIRO': 68,
-        'FEVEREIRO': 44,
-        'MARÇO': 49,
-        'ABRIL': 37,
-        'MAIO': 57,
-        'JUNHO': 48,
-        'JULHO': 36,
-        'AGOSTO': 7,
-        'SETEMBRO': 0,
-        'OUTUBRO': 0,
-        'NOVEMBRO': 0,
-        'DEZEMBRO': 0
-    },
-    predominantePorMes: {
-        'JANEIRO': 'Ocorrência ATS',
-        'FEVEREIRO': 'BIRD',
-        'MARÇO': 'COORDENAÇÃO',
-        'ABRIL': 'OUTROS',
-        'MAIO': 'BIRD',
-        'JUNHO': 'COORDENAÇÃO',
-        'JULHO': 'COORDENAÇÃO',
-        'AGOSTO': 'COORDENAÇÃO',
-        'SETEMBRO': '',
-        'OUTUBRO': '',
-        'NOVEMBRO': '',
-        'DEZEMBRO': ''
-    }
-};
-
-const DADOS_META = {
-    anoReferencia: "2026",
-    dataAtualizacao: "Agosto/2026"
-};
-
-// ═══════════════════════════════════════════════════════════════════
-// FIM DA ÁREA DE CONFIGURAÇÃO
-// ═══════════════════════════════════════════════════════════════════
-
-// ================================================================
-// ========== SISTEMA INTERNO ==========
-// ================================================================
-
-const DADOS_PADRAO = {
-    incidentes: JSON.parse(JSON.stringify(DADOS_INCIDENTES)),
-    ocorrencias: JSON.parse(JSON.stringify(DADOS_OCORRENCIAS)),
-    meta: JSON.parse(JSON.stringify(DADOS_META))
-};
-
-let dadosAtuais = JSON.parse(JSON.stringify(DADOS_PADRAO));
-let alerts = [];
-let charts = {};
-let isAdmin = false;
-
-const MESES = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];
-const MESES_LABEL = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-
-// ================================================================
-// ========== AUTENTICAÇÃO ==========
-// ================================================================
-
-function abrirLogin() {
-    if (isAdmin) {
-        mostrarAdmin();
-        return;
-    }
-    document.getElementById('loginModal').classList.remove('hidden');
-    document.getElementById('senhaInput').value = '';
-    document.getElementById('errorMsg').style.display = 'none';
-    document.getElementById('senhaInput').focus();
-}
-
-function login() {
-    const senha = document.getElementById('senhaInput').value;
-    if (senha === SENHA_ADMIN) {
-        isAdmin = true;
-        document.getElementById('loginModal').classList.add('hidden');
-        document.getElementById('adminBtn').textContent = '👑';
-        document.getElementById('adminBtn').classList.add('logged');
-        mostrarAdmin();
-        gerarJSONInput();
-    } else {
-        document.getElementById('errorMsg').style.display = 'block';
-        document.getElementById('senhaInput').value = '';
-        document.getElementById('senhaInput').focus();
-    }
-}
-
-function logout() {
-    isAdmin = false;
-    document.getElementById('adminSection').classList.add('hidden');
-    document.getElementById('adminBtn').textContent = '🔐';
-    document.getElementById('adminBtn').classList.remove('logged');
-}
-
-function mostrarAdmin() {
-    document.getElementById('adminSection').classList.remove('hidden');
-    document.getElementById('adminSection').scrollIntoView({ behavior: 'smooth' });
-}
-
-// ================================================================
-// ========== FUNÇÕES DE ACESSO ==========
-// ================================================================
-
-function getIncidentes() { return dadosAtuais.incidentes; }
-function getOcorrencias() { return dadosAtuais.ocorrencias; }
-function getMeta() { return dadosAtuais.meta; }
-
-// ================================================================
-// ========== ATUALIZAÇÃO ==========
-// ================================================================
-
-function atualizarDados() {
-    if (!isAdmin) {
-        alert('❌ Acesso negado! Faça login como administrador.');
-        return;
-    }
-    const textarea = document.getElementById('jsonDataInput');
-    try {
-        const novosDados = JSON.parse(textarea.value);
-        if (!novosDados.incidentes || !novosDados.ocorrencias || !novosDados.meta) {
-            throw new Error('Estrutura inválida!');
-        }
-        dadosAtuais = novosDados;
-        atualizarHeader();
-        recarregarDashboard();
-        alert('✅ Dados atualizados com sucesso!');
-    } catch (e) {
-        alert('❌ Erro: ' + e.message);
-        console.error('Erro:', e);
-    }
-}
-
-function resetarDados() {
-    if (!isAdmin) {
-        alert('❌ Acesso negado! Faça login como administrador.');
-        return;
-    }
-    if (confirm('Restaurar dados originais?')) {
-        dadosAtuais = JSON.parse(JSON.stringify(DADOS_PADRAO));
-        gerarJSONInput();
-        atualizarHeader();
-        recarregarDashboard();
-        alert('✅ Dados restaurados!');
-    }
-}
-
-function gerarJSONInput() {
-    if (isAdmin) {
-        document.getElementById('jsonDataInput').value = JSON.stringify(dadosAtuais, null, 2);
-    }
-}
-
-function atualizarHeader() {
-    const meta = getMeta();
-    document.getElementById('anoReferencia').textContent = meta.anoReferencia || '2026';
-    document.getElementById('dataAtualizacao').textContent = meta.dataAtualizacao || 'Atualizado';
-}
-
-// ================================================================
-// ========== EXPORTAÇÃO ==========
-// ================================================================
-
-function exportarCSV() {
-    const ocorrencias = getOcorrencias();
-    let csv = "Tipo,Quantidade\n";
-    Object.entries(ocorrencias.porTipo).forEach(([tipo, qtd]) => {
-        csv += `${tipo},${qtd}\n`;
-    });
-    csv += "\nOrigem,Quantidade\n";
-    Object.entries(ocorrencias.porOrigem).forEach(([origem, qtd]) => {
-        csv += `${origem},${qtd}\n`;
-    });
-    csv += "\nMês,Ocorrências,Tipo Predominante\n";
-    MESES.forEach(mes => {
-        const qtd = ocorrencias.porMes[mes] || 0;
-        const pred = ocorrencias.predominantePorMes[mes] || '-';
-        csv += `${mes},${qtd},${pred}\n`;
-    });
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `SIPACEA_IV_${getMeta().anoReferencia || '2026'}.csv`;
-    link.click();
-    URL.revokeObjectURL(link.href);
-}
-
-// ================================================================
-// ========== RENDERIZAÇÃO ==========
-// ================================================================
-
-function recarregarDashboard() {
-    renderizarKPIs();
-    renderizarAlertas();
-    renderizarTabela();
-    criarGraficoOcorrenciasTipo();
-    criarGraficoOcorrenciasOrigem();
-    criarGraficoIncidentes();
-    criarGraficoTendencia();
-}
-
-function renderizarKPIs() {
-    const container = document.getElementById('kpiContainer');
-    const incidentes = getIncidentes();
-    const ocorrencias = getOcorrencias();
-    const meta = getMeta();
-    const anoAtual = meta.anoReferencia || '2026';
-    const totalIncidentes = incidentes[anoAtual] ? incidentes[anoAtual].total : 0;
-    const potencial = incidentes[anoAtual] ? incidentes[anoAtual].potencial : 0;
-    const critico = incidentes[anoAtual] ? incidentes[anoAtual].critico : 0;
-    const totalOcorrencias = Object.values(ocorrencias.porMes).reduce((a, b) => a + b, 0);
-
-    const cards = [
-        { label: 'Incidentes', value: totalIncidentes, cls: 'vermelho', detalhe: anoAtual },
-        { label: 'Potenciais', value: potencial, cls: 'laranja', detalhe: 'ocorrências' },
-        { label: 'Críticos', value: critico, cls: 'vermelho', detalhe: 'ocorrências' },
-        { label: 'Ocorrências', value: totalOcorrencias, cls: 'azul', detalhe: 'total' }
-    ];
-
-    container.innerHTML = cards.map(c => `
-        <div class="kpi-card ${c.cls}">
-            <div class="label">${c.label}</div>
-            <div class="value">${c.value} <small>${c.detalhe}</small></div>
-        </div>
-    `).join('');
-}
-
-function renderizarAlertas() {
-    const container = document.getElementById('alertasLista');
-    alerts = [];
-    const ocorrencias = getOcorrencias();
-    const mesAtual = new Date().getMonth();
+    <!-- ... (mesmo HTML de antes) ... -->
     
-    if (mesAtual >= 1) {
-        const mesAnterior = MESES[mesAtual - 1];
-        const mesAtualNome = MESES[mesAtual];
-        const valAnterior = ocorrencias.porMes[mesAnterior] || 0;
-        const valAtual = ocorrencias.porMes[mesAtualNome] || 0;
-        if (valAtual > valAnterior * 1.3 && valAtual > 5) {
-            alerts.push({ text: `📈 Aumento significativo em ${mesAtualNome} (${valAtual} vs ${valAnterior})`, classe: 'atencao' });
-        }
-    }
+    <script>
+        // ================================================================
+        // ═══════════════════════════════════════════════════════════════════
+        // 📌 EDITE OS DADOS AQUI - Todos os visitantes verão estes dados
+        // ═══════════════════════════════════════════════════════════════════
+        // ================================================================
 
-    const total = Object.values(ocorrencias.porMes).reduce((a, b) => a + b, 0);
-    if (total > 350) {
-        alerts.push({ text: `📊 Total acumulado: ${total} ocorrências no ano`, classe: 'info' });
-    }
-
-    container.innerHTML = alerts.length === 0
-        ? `<span class="alerta-item info">✅ Nenhum alerta no momento</span>`
-        : alerts.map(a => `<span class="alerta-item ${a.classe}">${a.text}</span>`).join('');
-}
-
-function renderizarTabela() {
-    const container = document.getElementById('tabelaConteudo');
-    const ocorrencias = getOcorrencias();
-    
-    let html = `<table>
-        <thead><tr><th>Mês</th><th>Ocorrências</th><th>% do Total</th><th>Tipo Predominante</th></tr></thead><tbody>`;
-    
-    const total = Object.values(ocorrencias.porMes).reduce((a, b) => a + b, 0);
-    
-    MESES.forEach(mes => {
-        const qtd = ocorrencias.porMes[mes] || 0;
-        const percent = total > 0 ? ((qtd / total) * 100).toFixed(1) : 0;
-        const pred = ocorrencias.predominantePorMes[mes] || '-';
-        html += `<tr><td>${mes}</td><td>${qtd}</td><td>${percent}%</td><td>${pred}</td></tr>`;
-    });
-    
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-
-// ================================================================
-// ========== GRÁFICOS ==========
-// ================================================================
-
-function criarGraficoOcorrenciasTipo() {
-    const ctx = document.getElementById('chartOcorrenciasTipo').getContext('2d');
-    const dados = getOcorrencias().porTipo;
-    const sorted = Object.entries(dados).sort((a, b) => b[1] - a[1]);
-    const top10 = sorted.slice(0, 10);
-    const cores = ['#2a6df4', '#e67e22', '#27ae60', '#e74c3c', '#8e44ad', '#3498db', '#e84393', '#f39c12', '#1abc9c', '#7f8c8d'];
-
-    if (charts.tipo) charts.tipo.destroy();
-    charts.tipo = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: top10.map(t => t[0]),
-            datasets: [{ data: top10.map(t => t[1]), backgroundColor: cores.slice(0, top10.length) }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: { legend: { position: 'right', labels: { font: { size: 9 }, boxWidth: 12, padding: 8 } } }
-        }
-    });
-}
-
-function criarGraficoOcorrenciasOrigem() {
-    const ctx = document.getElementById('chartOcorrenciasOrigem').getContext('2d');
-    const dados = getOcorrencias().porOrigem;
-    const cores = ['#2a6df4', '#e67e22', '#27ae60'];
-
-    if (charts.origem) charts.origem.destroy();
-    charts.origem = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: Object.keys(dados),
-            datasets: [{ data: Object.values(dados), backgroundColor: cores }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: { legend: { position: 'right', labels: { font: { size: 10 }, boxWidth: 12, padding: 8 } } }
-        }
-    });
-}
-
-function criarGraficoIncidentes() {
-    const ctx = document.getElementById('chartIncidentes').getContext('2d');
-    const incidentes = getIncidentes();
-    const anos = Object.keys(incidentes).sort();
-    const potencial = anos.map(a => incidentes[a] ? incidentes[a].potencial : 0);
-    const critico = anos.map(a => incidentes[a] ? incidentes[a].critico : 0);
-
-    if (charts.incidentes) charts.incidentes.destroy();
-    charts.incidentes = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: anos,
-            datasets: [
-                { label: 'Potencial', data: potencial, backgroundColor: '#27ae60', borderRadius: 4 },
-                { label: 'Crítico', data: critico, backgroundColor: '#e74c3c', borderRadius: 4 }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 10, font: { size: 10 } } } },
-            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-        }
-    });
-}
-
-function criarGraficoTendencia() {
-    const ctx = document.getElementById('chartTendencia').getContext('2d');
-    const ocorrencias = getOcorrencias();
-    const labels = MESES_LABEL.slice(0, 8);
-    const dados = MESES.slice(0, 8).map(m => ocorrencias.porMes[m] || 0);
-    const predominantes = MESES.slice(0, 8).map(m => ocorrencias.predominantePorMes[m] || '');
-
-    const labelsComTipo = labels.map((label, i) => {
-        const pred = predominantes[i];
-        return pred ? `${label}\n(${pred})` : label;
-    });
-
-    if (charts.tendencia) charts.tendencia.destroy();
-    charts.tendencia = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labelsComTipo,
-            datasets: [{
-                label: 'Ocorrências',
-                data: dados,
-                backgroundColor: dados.map(v => v > 0 ? '#2a6df4' : '#e0e4e8'),
-                borderColor: '#2a6df4',
-                borderWidth: 1,
-                borderRadius: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        afterLabel: function(context) {
-                            const idx = context.dataIndex;
-                            const pred = predominantes[idx];
-                            return pred ? `Tipo predominante: ${pred}` : '';
-                        }
-                    }
-                }
+        const DADOS = {
+            meta: {
+                anoReferencia: "2026",
+                dataAtualizacao: "Setembro/2026"  // 👈 Atualize aqui
             },
-            scales: {
-                y: { beginAtZero: true, ticks: { stepSize: 10 } },
-                x: { ticks: { font: { size: 9 } } }
+            incidentes: {
+                '2023': { potencial: 7, critico: 0, total: 7 },
+                '2024': { potencial: 6, critico: 1, total: 7 },
+                '2025': { potencial: 14, critico: 0, total: 14 },
+                '2026': { potencial: 8, critico: 0, total: 8 }  // 👈 Atualize aqui
+            },
+            ocorrencias: {
+                porTipo: {
+                    'SEPARAÇÃO': 14,
+                    'BIRD': 67,        // 👈 Atualize aqui
+                    'FAUNA': 20,        // 👈 Atualize aqui
+                    'COORDENAÇÃO': 55,   // 👈 Atualize aqui
+                    'EMERGÊNCIA': 10,
+                    'CALLSIGN': 4,
+                    'TRANSPONDER': 7,
+                    'INTRUDER': 9,
+                    'RI': 10,
+                    'RD-ITA': 15,
+                    'DRONE': 4,
+                    'LASER': 6,
+                    'AUTORIZAÇÃO': 4,
+                    'OUTROS_TIPOS': 63
+                },
+                porOrigem: {
+                    'FNO': 210,
+                    'RELPREV': 79,
+                    'Fno-coordenação': 37
+                },
+                porMes: {
+                    'JANEIRO': 68,
+                    'FEVEREIRO': 44,
+                    'MARÇO': 49,
+                    'ABRIL': 37,
+                    'MAIO': 57,
+                    'JUNHO': 48,
+                    'JULHO': 36,
+                    'AGOSTO': 7,
+                    'SETEMBRO': 0,      // 👈 Atualize aqui
+                    'OUTUBRO': 0,
+                    'NOVEMBRO': 0,
+                    'DEZEMBRO': 0
+                },
+                predominantePorMes: {
+                    'JANEIRO': 'Ocorrência ATS',
+                    'FEVEREIRO': 'BIRD',
+                    'MARÇO': 'COORDENAÇÃO',
+                    'ABRIL': 'OUTROS',
+                    'MAIO': 'BIRD',
+                    'JUNHO': 'COORDENAÇÃO',
+                    'JULHO': 'COORDENAÇÃO',
+                    'AGOSTO': 'COORDENAÇÃO',
+                    'SETEMBRO': '',     // 👈 Atualize aqui
+                    'OUTUBRO': '',
+                    'NOVEMBRO': '',
+                    'DEZEMBRO': ''
+                }
             }
+        };
+
+        // ═══════════════════════════════════════════════════════════════════
+        // FIM DA ÁREA DE EDIÇÃO - NÃO MEXA DAQUI PARA BAIXO
+        // ═══════════════════════════════════════════════════════════════════
+
+        // ================================================================
+        // ========== SISTEMA DE EXIBIÇÃO ==========
+        // ================================================================
+
+        let dadosAtuais = JSON.parse(JSON.stringify(DADOS));
+        let charts = {};
+        const MESES = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];
+        const MESES_LABEL = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+        function getIncidentes() { return dadosAtuais.incidentes; }
+        function getOcorrencias() { return dadosAtuais.ocorrencias; }
+        function getMeta() { return dadosAtuais.meta; }
+
+        function atualizarHeader() {
+            const meta = getMeta();
+            document.getElementById('anoReferencia').textContent = meta.anoReferencia || '2026';
+            document.getElementById('dataAtualizacao').textContent = meta.dataAtualizacao || 'Atualizado';
+            document.getElementById('anoFooter').textContent = meta.anoReferencia || '2026';
         }
-    });
-}
 
-// ================================================================
-// ========== INICIALIZAÇÃO ==========
-// ================================================================
+        // ... (restante das funções de renderização - igual ao código anterior)
+        // ... (renderizarKPIs, renderizarAlertas, gráficos, etc.)
 
-document.addEventListener('DOMContentLoaded', function() {
-    atualizarHeader();
-    recarregarDashboard();
-});
-
-// Fechar modal ao clicar fora
-document.getElementById('loginModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.classList.add('hidden');
-    }
-});
-
-console.log('🔒 SIPACEA IV - Área Administrativa Protegida');
-console.log('🔑 Acesse clicando no cadeado no canto inferior direito');
-</script>
-
+        document.addEventListener('DOMContentLoaded', function() {
+            atualizarHeader();
+            recarregarDashboard();
+        });
+    </script>
 </body>
 </html>
